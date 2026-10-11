@@ -1,6 +1,5 @@
 {
   "version": 2,
-  "name": "odaplace",
   "framework": null,
   "outputDirectory": "public",
   "functions": {
@@ -10,7 +9,7 @@
   },
   "routes": [
     {
-      "src": "/(css|js|images|build|assets|favicon.ico|robots.txt)(.*)",
+      "src": "/(css|js|images|build|assets|favicon.*|robots.txt)(.*)",
       "dest": "/public/$1$2"
     },
     {
