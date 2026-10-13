@@ -18,15 +18,15 @@ class ProductController extends Controller
     {
         $filters = $request->all();
         $products = $this->productService->searchAndFilter($filters);
-        
+
         return view('products.index', compact('products', 'filters'));
     }
 
     public function show($slug)
     {
         $product = $this->productService->findBySlug($slug);
-        
-        if (!$product) {
+
+        if (! $product) {
             abort(404);
         }
 

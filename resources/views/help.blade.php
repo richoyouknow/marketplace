@@ -4,17 +4,16 @@
 
 @section('content')
 <div class="max-w-[1180px] mx-auto px-4 lg:px-8" x-data="{ openFaq: 0 }">
-    <section class="relative overflow-hidden rounded-3xl bg-gradient-to-br from-[#2b1710] via-[#5b2413] to-[#d46628] px-6 py-12 text-white shadow-xl sm:px-10 lg:px-16 lg:py-16">
-        <div class="absolute -right-16 -top-20 h-64 w-64 rounded-full bg-orange-300/20 blur-3xl"></div>
-        <div class="relative max-w-2xl">
-            <div class="mb-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-orange-100"><i data-lucide="sparkles" class="h-3.5 w-3.5"></i>Pusat bantuan Odaplace</div>
-            <h1 class="text-3xl font-bold tracking-tight sm:text-5xl">Ada yang bisa kami bantu?</h1>
-            <p class="mt-4 max-w-xl text-sm leading-7 text-orange-50/85 sm:text-base">Temukan jawaban untuk pertanyaan tentang pesanan, pembayaran, pengiriman, dan pengalaman belanja kamu di Odaplace.</p>
+    <section class="rounded-3xl bg-primary px-6 py-12 text-white shadow-lg sm:px-10 lg:px-16 lg:py-16">
+        <div class="max-w-2xl">
+            <div class="mb-5 inline-flex items-center rounded-full border border-white/30 bg-white/15 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.18em] text-white">Pusat bantuan Odaplace</div>
+            <h1 class="text-3xl font-bold tracking-tight sm:text-5xl text-white">Ada yang bisa kami bantu?</h1>
+            <p class="mt-4 max-w-xl text-sm leading-7 text-white/90 sm:text-base">Temukan jawaban untuk pertanyaan tentang pesanan, pembayaran, pengiriman, dan pengalaman belanja kamu di Odaplace.</p>
             <form action="{{ route('help') }}" method="GET" class="mt-8 flex max-w-xl items-center gap-2 rounded-2xl bg-white p-2 shadow-lg">
                 <i data-lucide="search" class="ml-3 h-5 w-5 shrink-0 text-gray-400"></i>
                 <label for="helpSearch" class="sr-only">Cari bantuan</label>
                 <input id="helpSearch" name="q" value="{{ request('q') }}" class="min-w-0 flex-1 border-0 bg-transparent px-2 py-3 text-sm text-gray-800 outline-none" placeholder="Cari topik bantuan...">
-                <button type="submit" class="rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white transition hover:bg-primary-hover">Cari</button>
+                <button type="submit" class="rounded-xl bg-gray-900 px-5 py-3 text-sm font-bold text-white transition hover:bg-black">Cari</button>
             </form>
         </div>
     </section>

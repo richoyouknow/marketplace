@@ -77,7 +77,7 @@ class DummyProducts
 
         return array_map(static function (array $item) use ($locationCoordinates): array {
             [$id, $slug, $name, $description, $price, $originalPrice, $discount, $category, $brand, $image, $rating, $reviews, $sold, $specifications, $tags, $address] = $item;
-            $mapUrl = 'https://www.google.com/maps/search/?api=1&query=' . urlencode($address);
+            $mapUrl = 'https://www.google.com/maps/search/?api=1&query='.urlencode($address);
             $coordinates = collect($locationCoordinates)->first(
                 static fn (array $coordinate, string $city): bool => str_contains($address, $city),
                 [-6.2088, 106.8456]

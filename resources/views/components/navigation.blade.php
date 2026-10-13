@@ -51,6 +51,16 @@
                     Bantuan
                 </a>
             </li>
+            <li>
+                <a href="{{ route('about') }}" class="flex items-center gap-1 py-3 px-3 hover:text-primary transition whitespace-nowrap">
+                    Tentang Kami
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('contact') }}" class="flex items-center gap-1 py-3 px-3 hover:text-primary transition whitespace-nowrap">
+                    Kontak
+                </a>
+            </li>
         </ul>
     </div>
 </nav>
@@ -87,6 +97,17 @@
                          <li><a href="{{ route('products.index', ['category' => 'kemeja']) }}" class="block text-gray-600">Kemeja</a></li>
                          <li><a href="{{ route('products.index', ['category' => 'dress']) }}" class="block text-gray-600">Dress</a></li>
                          <li><a href="{{ route('products.index', ['category' => 'kaos']) }}" class="block text-gray-600">Kaos</a></li>
+                    </ul>
+                </li>
+                <li class="pt-4 border-t">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Informasi</span>
+                    <ul class="space-y-3 pl-2 text-sm">
+                         <li><a href="{{ route('about') }}" class="block text-gray-600 hover:text-primary">Tentang Odaplace</a></li>
+                         <li><a href="{{ route('contact') }}" class="block text-gray-600 hover:text-primary">Kontak Kami</a></li>
+                         <li><a href="{{ route('help') }}" class="block text-gray-600 hover:text-primary">Pusat Bantuan</a></li>
+                         <li><a href="{{ route('refund') }}" class="block text-gray-600 hover:text-primary">Kebijakan Refund</a></li>
+                         <li><a href="{{ route('terms') }}" class="block text-gray-600 hover:text-primary">Syarat & Ketentuan</a></li>
+                         <li><a href="{{ route('privacy') }}" class="block text-gray-600 hover:text-primary">Kebijakan Privasi</a></li>
                     </ul>
                 </li>
                 <li class="pt-4 border-t">

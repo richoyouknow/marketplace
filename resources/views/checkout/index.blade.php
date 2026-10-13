@@ -1,4 +1,4 @@
-﻿@extends('layouts.app')
+@extends('layouts.app')
 
 @section('title', 'Pembayaran - Odaplace')
 
@@ -18,52 +18,67 @@
                 
                 <!-- Alamat Pengiriman -->
                 <div class="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-                    <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-                        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm">1</span>
-                        Alamat Pengiriman
-                    </h2>
-                    
+                    <div class="flex items-start justify-between gap-4 mb-6">
+                        <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+                            <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm">1</span>
+                            Alamat Pengiriman
+                        </h2>
+                        <span class="text-xs text-gray-500 mt-2">* Wajib diisi</span>
+                    </div>
+
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">Full Name *</label>
-                            <input type="text" name="name" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="John Doe">
+                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Penerima <span class="text-red-500">*</span></label>
+                            <input id="name" type="text" name="name" value="{{ old('name') }}" required autocomplete="name" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Nama lengkap penerima">
                             @error('name') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        
+
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">Phone Number *</label>
-                            <input type="text" name="phone" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="+1 234 567 8900">
+                            <label for="phone" class="block text-sm font-medium text-gray-700">Nomor HP <span class="text-red-500">*</span></label>
+                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" required autocomplete="tel" inputmode="tel" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: 081234567890">
                             @error('phone') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        
+
                         <div class="md:col-span-2 space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">Street Address *</label>
-                            <input type="text" name="address" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="123 Main St, Apt 4B">
+                            <label for="address" class="block text-sm font-medium text-gray-700">Alamat Lengkap <span class="text-red-500">*</span></label>
+                            <textarea id="address" name="address" required rows="3" autocomplete="street-address" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Nama jalan, nomor rumah, gedung, atau patokan">{{ old('address') }}</textarea>
+                            <p class="text-xs text-gray-500">Pastikan alamat mudah ditemukan kurir.</p>
                             @error('address') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        
+
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">State / Province *</label>
-                            <input type="text" name="province" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Jakarta">
+                            <label for="province" class="block text-sm font-medium text-gray-700">Provinsi <span class="text-red-500">*</span></label>
+                            <input id="province" type="text" name="province" value="{{ old('province') }}" required autocomplete="address-level1" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Jawa Barat">
                             @error('province') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        
+
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">City *</label>
-                            <input type="text" name="city" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Jakarta City">
+                            <label for="city" class="block text-sm font-medium text-gray-700">Kabupaten / Kota <span class="text-red-500">*</span></label>
+                            <input id="city" type="text" name="city" value="{{ old('city') }}" required autocomplete="address-level2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Kota Bandung">
                             @error('city') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        
+
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">District *</label>
-                            <input type="text" name="district" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Manhattan">
+                            <label for="district" class="block text-sm font-medium text-gray-700">Kecamatan <span class="text-red-500">*</span></label>
+                            <input id="district" type="text" name="district" value="{{ old('district') }}" required autocomplete="address-level3" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Sukajadi">
                             @error('district') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
-                        
+
                         <div class="space-y-2">
-                            <label class="block text-sm font-medium text-gray-700">ZIP / Postal Code *</label>
-                            <input type="text" name="postal_code" required class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="10001">
+                            <label for="kelurahan" class="block text-sm font-medium text-gray-700">Kelurahan / Desa <span class="text-red-500">*</span></label>
+                            <input id="kelurahan" type="text" name="kelurahan" value="{{ old('kelurahan') }}" required autocomplete="address-line2" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Pasteur">
+                            @error('kelurahan') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="space-y-2">
+                            <label for="postal_code" class="block text-sm font-medium text-gray-700">Kode Pos <span class="text-red-500">*</span></label>
+                            <input id="postal_code" type="text" name="postal_code" value="{{ old('postal_code') }}" required maxlength="5" inputmode="numeric" autocomplete="postal-code" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: 40161">
                             @error('postal_code') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
+                        </div>
+
+                        <div class="md:col-span-2 space-y-2">
+                            <label for="notes" class="block text-sm font-medium text-gray-700">Catatan untuk Kurir <span class="font-normal text-gray-400">(opsional)</span></label>
+                            <input id="notes" type="text" name="notes" value="{{ old('notes') }}" maxlength="255" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: Titip di pos satpam, rumah pagar hitam">
                         </div>
                     </div>
                 </div>
@@ -72,33 +87,21 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
                     <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                         <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm">2</span>
-                        Metode Pengiriman
+                        Pilih Pengiriman
                     </h2>
-                    
                     <div class="space-y-4">
-                        <label class="relative flex items-start gap-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-primary transition-colors bg-white group" x-data="{ selected: true }" @click="document.getElementById('ship_std').checked = true; document.querySelectorAll('.ship-card').forEach(c => c.classList.remove('border-primary', 'bg-orange-50/30')); $el.classList.add('border-primary', 'bg-orange-50/30')">
-                            <div class="flex items-center h-6">
-                                <input id="ship_std" type="radio" name="shipping" value="standard" checked class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
-                            </div>
+                        <label class="ship-card relative flex items-start gap-4 p-4 border border-primary bg-orange-50/30 rounded-xl cursor-pointer hover:border-primary transition-colors">
+                            <input id="ship_std" type="radio" name="shipping" value="standard" checked class="mt-1 w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
                             <div class="flex-1">
-                                <div class="flex items-center justify-between">
-                                    <span class="font-bold text-gray-900 block mb-1">Standard Pengiriman</span>
-                                    <span class="font-bold text-gray-900">Gratis</span>
-                                </div>
-                                <span class="text-sm text-gray-500 block">Delivery in 5-7 business days</span>
+                                <div class="flex items-center justify-between gap-4"><span class="font-bold text-gray-900">Reguler</span><span class="font-bold text-green-600">Gratis</span></div>
+                                <span class="text-sm text-gray-500 block mt-1">Estimasi tiba 2–5 hari kerja</span>
                             </div>
                         </label>
-                        
-                        <label class="relative flex items-start gap-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-primary transition-colors bg-white group ship-card" @click="document.getElementById('ship_exp').checked = true; document.querySelectorAll('.ship-card').forEach(c => c.classList.remove('border-primary', 'bg-orange-50/30')); $el.classList.add('border-primary', 'bg-orange-50/30')">
-                            <div class="flex items-center h-6">
-                                <input id="ship_exp" type="radio" name="shipping" value="express" class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
-                            </div>
+                        <label class="ship-card relative flex items-start gap-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-primary transition-colors">
+                            <input id="ship_exp" type="radio" name="shipping" value="express" class="mt-1 w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
                             <div class="flex-1">
-                                <div class="flex items-center justify-between">
-                                    <span class="font-bold text-gray-900 block mb-1">Express Pengiriman</span>
-                                    <span class="font-bold text-gray-900">$25.00</span>
-                                </div>
-                                <span class="text-sm text-gray-500 block">Delivery in 2-3 business days</span>
+                                <div class="flex items-center justify-between gap-4"><span class="font-bold text-gray-900">Express</span><span class="font-bold text-gray-900">Rp 25.000</span></div>
+                                <span class="text-sm text-gray-500 block mt-1">Estimasi tiba 1–2 hari kerja</span>
                             </div>
                         </label>
                     </div>
@@ -108,36 +111,22 @@
                 <div class="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
                     <h2 class="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                         <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center text-sm">3</span>
-                        Metode Pembayaran
+                        Pilih Pembayaran
                     </h2>
-                    
                     <div class="space-y-4">
-                        <!-- Demo Mode Banner -->
-                        <div class="bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-lg flex items-start gap-3 mb-6">
-                            <i data-lucide="info" class="w-5 h-5 mt-0.5 shrink-0"></i>
-                            <p class="text-sm">This is a demo checkout. No real payment is processed. Selecting a payment method below is just for simulation.</p>
-                        </div>
-                        
                         <label class="flex items-center gap-4 p-4 border border-primary bg-orange-50/30 rounded-xl cursor-pointer">
-                            <div class="flex items-center h-6">
-                                <input type="radio" name="payment" value="credit_card" checked class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
-                            </div>
-                            <div class="flex-1 flex items-center justify-between">
-                                <span class="font-bold text-gray-900">Kartu Kredit / Debit</span>
-                                <div class="flex gap-2 text-gray-400">
-                                    <i data-lucide="credit-card" class="w-6 h-6"></i>
-                                </div>
-                            </div>
+                            <input type="radio" name="payment" value="bank_transfer" checked class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
+                            <div class="flex-1 flex items-center justify-between"><span class="font-bold text-gray-900">Transfer Bank</span><i data-lucide="landmark" class="w-6 h-6 text-gray-400"></i></div>
                         </label>
-                        
-                        <label class="flex items-center gap-4 p-4 border border-gray-200 rounded-xl cursor-pointer">
-                            <div class="flex items-center h-6">
-                                <input type="radio" name="payment" value="paypal" class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary disabled:opacity-50">
-                            </div>
-                            <div class="flex-1 flex items-center justify-between">
-                                <span class="font-bold text-gray-900">PayPal</span>
-                            </div>
+                        <label class="flex items-center gap-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-primary">
+                            <input type="radio" name="payment" value="e_wallet" class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
+                            <div class="flex-1 flex items-center justify-between"><span class="font-bold text-gray-900">E-Wallet (GoPay, OVO, DANA)</span><i data-lucide="smartphone" class="w-6 h-6 text-gray-400"></i></div>
                         </label>
+                        <label class="flex items-center gap-4 p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-primary">
+                            <input type="radio" name="payment" value="cod" class="w-5 h-5 text-primary border-gray-300 focus:ring-primary accent-primary">
+                            <div class="flex-1 flex items-center justify-between"><span class="font-bold text-gray-900">COD (Bayar di Tempat)</span><i data-lucide="banknote" class="w-6 h-6 text-gray-400"></i></div>
+                        </label>
+                        <p class="text-xs text-gray-500 flex gap-2 items-start"><i data-lucide="info" class="w-4 h-4 shrink-0"></i> Pembayaran diproses secara aman. Untuk demo, pesanan langsung dibuat setelah formulir dikirim.</p>
                     </div>
                 </div>
             </form>
@@ -176,7 +165,7 @@
                     </div>
                     <div class="flex justify-between text-gray-600">
                         <span>Pajak</span>
-                        <span class="font-medium text-gray-900">$0.00</span>
+                        <span class="font-medium text-gray-900">Rp 0</span>
                     </div>
                 </div>
                 

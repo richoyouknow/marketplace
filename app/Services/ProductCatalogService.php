@@ -3,8 +3,8 @@
 namespace App\Services;
 
 use App\Data\DummyProducts;
-use Illuminate\Support\Collection;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Collection;
 
 class ProductCatalogService
 {
@@ -44,54 +44,55 @@ class ProductCatalogService
     {
         $query = $this->products;
 
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $search = strtolower($filters['search']);
             $query = $query->filter(function ($product) use ($search) {
-                return str_contains(strtolower($product['name']), $search) || 
+                return str_contains(strtolower($product['name']), $search) ||
                        str_contains(strtolower($product['brand']), $search) ||
                        str_contains(strtolower($product['category']), $search);
             });
         }
 
-        if (!empty($filters['category'])) {
+        if (! empty($filters['category'])) {
             $category = strtolower(trim((string) $filters['category']));
             $query = $query->filter(fn (array $product) => strtolower((string) $product['category']) === $category);
         }
 
-        if (!empty($filters['min_price'])) {
-            $query = $query->where('price', '>=', (int)$filters['min_price']);
+        if (! empty($filters['min_price'])) {
+            $query = $query->where('price', '>=', (int) $filters['min_price']);
         }
 
-        if (!empty($filters['max_price'])) {
-            $query = $query->where('price', '<=', (int)$filters['max_price']);
+        if (! empty($filters['max_price'])) {
+            $query = $query->where('price', '<=', (int) $filters['max_price']);
         }
 
-        if (!empty($filters['supplier_types'])) {
+        if (! empty($filters['supplier_types'])) {
             // Supplier types filter
-            $query = $query->whereIn('supplier', (array)$filters['supplier_types']);
+            $query = $query->whereIn('supplier', (array) $filters['supplier_types']);
         }
 
-        if (!empty($filters['product_types'])) {
+        if (! empty($filters['product_types'])) {
             // Product types (availability) filter
-            $types = collect((array)$filters['product_types'])->flatMap(function ($type) {
+            $types = collect((array) $filters['product_types'])->flatMap(function ($type) {
                 if ($type === 'Ready to Ship' || $type === 'Siap Dikirim') {
                     return ['Siap Dikirim', 'Ready to Ship'];
                 }
+
                 return [$type];
             })->all();
             $query = $query->whereIn('availability', $types);
         }
-        
-        if (!empty($filters['condition'])) {
+
+        if (! empty($filters['condition'])) {
             // Condition filter
-            $query = $query->whereIn('condition', (array)$filters['condition']);
-        }
-        
-        if (!empty($filters['min_order'])) {
-            $query = $query->where('min_order', '<=', (int)$filters['min_order']);
+            $query = $query->whereIn('condition', (array) $filters['condition']);
         }
 
-        if (!empty($filters['sort'])) {
+        if (! empty($filters['min_order'])) {
+            $query = $query->where('min_order', '<=', (int) $filters['min_order']);
+        }
+
+        if (! empty($filters['sort'])) {
             switch ($filters['sort']) {
                 case 'price_asc':
                     $query = $query->sortBy('price');
@@ -108,7 +109,7 @@ class ProductCatalogService
             }
         }
 
-        if (!empty($filters['nearby']) && is_numeric($filters['latitude'] ?? null) && is_numeric($filters['longitude'] ?? null)) {
+        if (! empty($filters['nearby']) && is_numeric($filters['latitude'] ?? null) && is_numeric($filters['longitude'] ?? null)) {
             $latitude = (float) $filters['latitude'];
             $longitude = (float) $filters['longitude'];
             $query = $query->sortBy(function (array $product) use ($latitude, $longitude): float {
@@ -124,7 +125,7 @@ class ProductCatalogService
 
         $page = $filters['page'] ?? 1;
         $perPage = $filters['per_page'] ?? 16;
-        
+
         // Return Paginator
         return new LengthAwarePaginator(
             $query->forPage($page, $perPage)->values(),

@@ -29,7 +29,7 @@ class CartService
                 'image' => $product['image'],
                 'brand' => $product['brand'],
                 'stock' => $product['stock'],
-                'quantity' => $quantity
+                'quantity' => $quantity,
             ];
         }
 
@@ -79,12 +79,14 @@ class CartService
         foreach ($cart as $item) {
             $total += $item['price'] * $item['quantity'];
         }
+
         return $total;
     }
 
     public function getCount(): int
     {
         $cart = $this->getCart();
+
         return count($cart);
     }
 }

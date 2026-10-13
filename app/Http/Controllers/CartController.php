@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class CartController extends Controller
 {
     protected CartService $cartService;
+
     protected ProductCatalogService $productService;
 
     public function __construct(CartService $cartService, ProductCatalogService $productService)
@@ -21,6 +22,7 @@ class CartController extends Controller
     {
         $cart = $this->cartService->getCart();
         $total = $this->cartService->getTotal();
+
         return view('cart.index', compact('cart', 'total'));
     }
 
@@ -28,12 +30,12 @@ class CartController extends Controller
     {
         $request->validate([
             'product_id' => 'required|integer',
-            'quantity' => 'required|integer|min:1'
+            'quantity' => 'required|integer|min:1',
         ]);
 
         $product = $this->productService->getAll()->firstWhere('id', $request->product_id);
-        
-        if (!$product) {
+
+        if (! $product) {
             return back()->with('error', 'Product not found.');
         }
 
@@ -45,7 +47,7 @@ class CartController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'quantity' => 'required|integer|min:0'
+            'quantity' => 'required|integer|min:0',
         ]);
 
         $this->cartService->update($id, $request->quantity);
