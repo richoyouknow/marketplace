@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Pembayaran - Odaplace')
+@section('title', 'Pembayaran - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
@@ -35,7 +35,7 @@
 
                         <div class="space-y-2">
                             <label for="phone" class="block text-sm font-medium text-gray-700">Nomor HP <span class="text-red-500">*</span></label>
-                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" required autocomplete="tel" inputmode="tel" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: 081234567890">
+                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" required autocomplete="tel" inputmode="tel" class="w-full border border-gray-300 rounded-lg px-4 py-2.5 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="Contoh: 088991682058">
                             @error('phone') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 

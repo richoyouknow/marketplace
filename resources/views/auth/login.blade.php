@@ -1,13 +1,13 @@
 @extends('layouts.app')
 
-@section('title', 'Login - Odaplace')
+@section('title', 'Login - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-md mx-auto px-4 mt-12 mb-24">
     <div class="bg-white rounded-xl border border-gray-200 p-8 shadow-sm">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-bold text-gray-900 mb-2">Welcome Back</h1>
-            <p class="text-gray-500">Sign in to your Odaplace account</p>
+            <p class="text-gray-500">Sign in to your ALLWEAR FASHION account</p>
         </div>
         
         <form action="#" class="space-y-4" onsubmit="event.preventDefault(); window.location.href='{{ route('home') }}'">

@@ -50,7 +50,7 @@ class PagesTest extends TestCase
     {
         $response = $this->get(route('contact'));
         $response->assertStatus(200);
-        $response->assertSee('Hubungi Tim Odaplace');
+        $response->assertSee('Hubungi Tim ALLWEAR FASHION');
 
         $redirect = $this->get('/contact');
         $redirect->assertRedirect('/kontak');
@@ -61,9 +61,9 @@ class PagesTest extends TestCase
         $payload = [
             'name' => 'Budi Santoso',
             'email' => 'budi@example.com',
-            'phone' => '081234567890',
+            'phone' => '088991682058',
             'subject' => 'Pertanyaan Pesanan & Pengiriman',
-            'message' => 'Halo tim Odaplace, saya ingin menanyakan status pesanan saya.',
+            'message' => 'Halo tim ALLWEAR FASHION, saya ingin menanyakan status pesanan saya.',
         ];
 
         $response = $this->post(route('contact.send'), $payload);
@@ -75,7 +75,7 @@ class PagesTest extends TestCase
     {
         $response = $this->get(route('help'));
         $response->assertStatus(200);
-        $response->assertSee('Pusat bantuan Odaplace');
+        $response->assertSee('Pusat bantuan ALLWEAR FASHION');
         $response->assertSee('Ada yang bisa kami bantu?');
     }
 }

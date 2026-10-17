@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Produk - Odaplace')
+@section('title', 'Produk - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1440px] mx-auto px-4 lg:px-8" x-data="{ filterDrawerOpen: false }">

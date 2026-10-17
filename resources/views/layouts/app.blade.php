@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Odaplace — marketplace fashion modern untuk menemukan pakaian pilihan dengan harga terbaik.">
-    <title>@yield('title', 'Odaplace - Premium E-Commerce')</title>
+    <meta name="description" content="ALLWEAR FASHION — marketplace fashion modern untuk menemukan pakaian pilihan dengan harga terbaik.">
+    <title>@yield('title', 'ALLWEAR FASHION - Premium E-Commerce')</title>
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="{{ asset('favicon.svg') }}">
     <link rel="icon" type="image/png" sizes="64x64" href="{{ asset('favicon.png') }}">
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}">
+    <link rel="apple-touch-icon" href="{{ asset('favicon.png') }}">
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

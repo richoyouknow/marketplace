@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kontak Kami - Odaplace')
+@section('title', 'Kontak Kami - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6">
@@ -17,7 +17,7 @@
             <div class="mb-4 inline-flex items-center rounded-full border border-white/30 bg-white/15 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-white">
                 Layanan Bantuan Pelanggan
             </div>
-            <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-white">Hubungi Tim Odaplace</h1>
+            <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl text-white">Hubungi Tim ALLWEAR FASHION</h1>
             <p class="mt-4 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">
                 Ada pertanyaan tentang produk, konfirmasi pesanan, atau kendala pengiriman? Tim kami siap mendengarkan dan membantu Anda setiap hari.
             </p>
@@ -43,8 +43,8 @@
                         </div>
                         <div>
                             <span class="text-xs text-gray-400 block">WhatsApp / Telepon</span>
-                            <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" class="font-bold text-gray-900 hover:text-primary transition-colors">
-                                +62 812-3456-7890
+                            <a href="https://wa.me/6288991682058" target="_blank" rel="noopener noreferrer" class="font-bold text-gray-900 hover:text-primary transition-colors">
+                                088991682058
                             </a>
                             <span class="text-[11px] text-green-600 block mt-0.5 font-medium flex items-center gap-1">
                                 <span class="w-2 h-2 rounded-full bg-green-500 inline-block animate-pulse"></span> Online & Responsif
@@ -59,10 +59,9 @@
                         </div>
                         <div>
                             <span class="text-xs text-gray-400 block">Email Dukungan</span>
-                            <a href="mailto:support@odaplace.test" class="font-bold text-gray-900 hover:text-primary transition-colors">
-                                support@odaplace.test
+                            <a href="mailto:allawearindfashion@gmail.com" class="font-bold text-gray-900 hover:text-primary transition-colors break-all">
+                                allawearindfashion@gmail.com
                             </a>
-                            <span class="text-[11px] text-gray-400 block mt-0.5">halo@odaplace.test</span>
                         </div>
                     </div>
 
@@ -72,11 +71,14 @@
                             <i data-lucide="map-pin" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <span class="text-xs text-gray-400 block">Kantor Operasional</span>
-                            <p class="font-bold text-gray-900">Odaplace Headquarter</p>
-                            <p class="text-xs text-gray-500 mt-0.5 leading-relaxed">
-                                Jl. Jenderal Sudirman Kav. 52-53, Senayan, Kebayoran Baru, Jakarta Selatan, DKI Jakarta 12190
+                            <span class="text-xs text-gray-400 block">Kantor & Workshop Operasional</span>
+                            <p class="font-bold text-gray-900">ALLWEAR FASHION</p>
+                            <p class="text-xs text-gray-600 mt-1 leading-relaxed">
+                                KP. SETU 2, Desa/Kelurahan Situ Udik, Kec. Cinungbulang, Kab. Bogor, Provinsi Jawa Barat Kode Pos: 16630
                             </p>
+                            <div class="mt-2 inline-flex items-center gap-1 text-[11px] font-semibold text-primary bg-orange-50 px-2 py-0.5 rounded-md">
+                                <i data-lucide="calendar" class="w-3 h-3"></i> Usaha Mikro berjalan sejak: September 2026
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -149,7 +151,7 @@
                         <!-- No HP / WhatsApp -->
                         <div class="space-y-1.5">
                             <label for="phone" class="block text-xs font-bold text-gray-700">No. WhatsApp / HP <span class="font-normal text-gray-400">(opsional)</span></label>
-                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="081234567890">
+                            <input id="phone" type="tel" name="phone" value="{{ old('phone') }}" class="w-full border border-gray-300 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary" placeholder="088991682058">
                             @error('phone') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror
                         </div>
 

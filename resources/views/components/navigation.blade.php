@@ -77,8 +77,10 @@
          x-transition:leave-end="-translate-x-full">
         
         <div class="p-4 border-b flex items-center justify-between">
-            <span class="font-bold text-lg">Menu</span>
-            <button @click="mobileMenuOpen = false" class="text-gray-500 hover:text-gray-900">
+            <a href="{{ route('home') }}" class="flex items-center gap-2">
+                <img src="{{ asset('allwear-logo.png') }}" alt="Allwear" class="h-8 w-auto object-contain">
+            </a>
+            <button @click="mobileMenuOpen = false" aria-label="Tutup menu" class="text-gray-500 hover:text-gray-900">
                 <i data-lucide="x" class="w-6 h-6"></i>
             </button>
         </div>
@@ -102,13 +104,24 @@
                 <li class="pt-4 border-t">
                     <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Informasi</span>
                     <ul class="space-y-3 pl-2 text-sm">
-                         <li><a href="{{ route('about') }}" class="block text-gray-600 hover:text-primary">Tentang Odaplace</a></li>
+                         <li><a href="{{ route('about') }}" class="block text-gray-600 hover:text-primary">Tentang ALLWEAR FASHION</a></li>
                          <li><a href="{{ route('contact') }}" class="block text-gray-600 hover:text-primary">Kontak Kami</a></li>
                          <li><a href="{{ route('help') }}" class="block text-gray-600 hover:text-primary">Pusat Bantuan</a></li>
                          <li><a href="{{ route('refund') }}" class="block text-gray-600 hover:text-primary">Kebijakan Refund</a></li>
                          <li><a href="{{ route('terms') }}" class="block text-gray-600 hover:text-primary">Syarat & Ketentuan</a></li>
                          <li><a href="{{ route('privacy') }}" class="block text-gray-600 hover:text-primary">Kebijakan Privasi</a></li>
                     </ul>
+                </li>
+                <li class="pt-4 border-t">
+                    <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2 block">Pilih Bahasa / Language</span>
+                    <div class="grid grid-cols-2 gap-2 text-xs font-semibold">
+                        <a href="{{ route('lang.switch', 'id') }}" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition {{ app()->getLocale() === 'id' ? 'bg-primary text-white border-primary shadow-xs' : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100' }}">
+                            <span>Bahasa Indonesia</span>
+                        </a>
+                        <a href="{{ route('lang.switch', 'en') }}" class="flex items-center justify-center gap-1.5 py-2 px-3 rounded-lg border transition {{ app()->getLocale() === 'en' ? 'bg-primary text-white border-primary shadow-xs' : 'bg-gray-50 text-gray-700 border-gray-200 hover:bg-gray-100' }}">
+                            <span>English</span>
+                        </a>
+                    </div>
                 </li>
                 <li class="pt-4 border-t">
                     <a href="{{ route('login') }}" class="flex items-center justify-center gap-2 w-full py-2.5 px-4 bg-primary text-white rounded-lg text-sm font-semibold hover:bg-primary-hover transition-colors">

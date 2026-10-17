@@ -1,5 +1,5 @@
-﻿@extends('layouts.app')
-@section('title', 'My Profile - Odaplace')
+@extends('layouts.app')
+@section('title', 'My Profile - ALLWEAR FASHION')
 @section('content')
 <div class="max-w-[1200px] mx-auto px-4 lg:px-8"><div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
 <aside class="bg-white border border-gray-200 rounded-xl p-4 h-fit"><div class="flex items-center gap-3 p-3 mb-4 border-b border-gray-100"><div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center font-bold text-primary">AM</div><div><p class="font-bold text-gray-900">Alex Morgan</p><p class="text-xs text-gray-500">Demo account</p></div></div><nav class="space-y-1 text-sm"><a href="{{ route('account.profile') }}" class="block px-3 py-2 rounded-lg bg-orange-50 text-primary font-semibold">Profile settings</a><a href="{{ route('account.orders') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50">Order history</a><a href="{{ route('wishlist.index') }}" class="block px-3 py-2 rounded-lg text-gray-600 hover:bg-gray-50">Wishlist</a></nav></aside>

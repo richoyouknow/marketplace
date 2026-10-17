@@ -52,7 +52,7 @@
         <div class="col-span-1 lg:col-span-3">
             <div class="relative bg-gray-950 rounded-2xl overflow-hidden min-h-[380px] md:min-h-[440px] flex items-center group shadow-md border border-gray-100">
                 <!-- Background Image: Fokus Murni Produk Pakaian -->
-                <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=1400&q=85" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="Produk Pakaian Premium Odaplace">
+                <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?auto=format&fit=crop&w=1400&q=85" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" alt="Produk Pakaian Premium ALLWEAR FASHION">
                 
                 <!-- Dark Gradient Overlay for Crisp White Title -->
                 <div class="absolute inset-0 bg-gradient-to-r from-gray-950/90 via-gray-950/75 to-transparent z-10"></div>

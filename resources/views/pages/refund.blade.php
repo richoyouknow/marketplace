@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kebijakan Refund & Pengembalian - Odaplace')
+@section('title', 'Kebijakan Refund & Pengembalian - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1180px] mx-auto px-4 lg:px-8 py-6">
@@ -52,7 +52,7 @@
             <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
                 <span class="w-8 h-8 rounded-full bg-orange-100 text-primary flex items-center justify-center font-bold text-sm mb-3">3</span>
                 <h3 class="font-bold text-gray-900 text-sm mb-1.5">Kirim Balik Produk</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">Kemas barang seperti semula bersama tag asli lalu kirimkan ke alamat gudang retur Odaplace.</p>
+                <p class="text-xs text-gray-500 leading-relaxed">Kemas barang seperti semula bersama tag asli lalu kirimkan ke alamat workshop retur ALLWEAR FASHION (KP. SETU 2, Desa/Kelurahan Situ Udik, Kec. Cinungbulang, Kab. Bogor, Jawa Barat 16630).</p>
             </div>
 
             <div class="bg-white border border-gray-200 rounded-2xl p-5 shadow-sm">
@@ -166,7 +166,7 @@
                 </div>
                 <h3 class="font-bold text-gray-900 text-base mb-2">Ingin Mengajukan Refund?</h3>
                 <p class="text-xs text-gray-500 leading-relaxed mb-6">
-                    Tim penyelesaian kendala Odaplace siap membantu proses retur kamu dengan cepat dan ramah.
+                    Tim penyelesaian kendala ALLWEAR FASHION siap membantu proses retur kamu dengan cepat dan ramah.
                 </p>
 
                 <div class="space-y-3">

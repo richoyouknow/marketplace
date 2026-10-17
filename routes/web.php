@@ -37,7 +37,7 @@ Route::view('/register', 'auth.register')->name('register');
 Route::view('/account/profile', 'account.profile')->name('account.profile');
 Route::get('/account/orders', [CheckoutController::class, 'ordersList'])->name('account.orders');
 
-// Halaman Informasi Odaplace
+// Halaman Informasi ALLWEAR FASHION
 Route::get('/syarat-ketentuan', [PageController::class, 'terms'])->name('terms');
 Route::get('/kebijakan-privasi', [PageController::class, 'privacy'])->name('privacy');
 Route::get('/kebijakan-refund', [PageController::class, 'refund'])->name('refund');
@@ -51,3 +51,12 @@ Route::redirect('/privacy', '/kebijakan-privasi');
 Route::redirect('/refund', '/kebijakan-refund');
 Route::redirect('/about', '/tentang-kami');
 Route::redirect('/contact', '/kontak');
+
+// Language Switcher (ID / EN)
+Route::get('/lang/{locale}', function (string $locale) {
+    if (in_array($locale, ['id', 'en'])) {
+        session(['locale' => $locale]);
+    }
+
+    return back();
+})->name('lang.switch');

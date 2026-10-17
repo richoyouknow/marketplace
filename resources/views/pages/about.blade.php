@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Tentang Kami - Odaplace')
+@section('title', 'Tentang Kami - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1200px] mx-auto px-4 lg:px-8 py-6">
@@ -21,7 +21,7 @@
                 Mendefinisikan Ulang Pengalaman Belanja Anda
             </h1>
             <p class="mt-5 text-sm sm:text-base leading-relaxed text-white/90">
-                <strong>Odaplace</strong> lahir untuk menghadirkan platform belanja daring yang menghubungkan produk berkualitas, kurasi gaya terkini, serta kecepatan logistik yang aman ke seluruh penjuru Indonesia.
+                <strong>ALLWEAR FASHION</strong> lahir untuk menghadirkan platform belanja daring yang menghubungkan produk berkualitas, kurasi gaya fashion terkini, serta kecepatan logistik yang aman ke seluruh penjuru Indonesia.
             </p>
             <div class="mt-8 flex flex-wrap gap-4">
                 <a href="{{ route('products.index') }}" class="px-6 py-3.5 rounded-xl bg-white text-gray-900 font-bold text-sm hover:bg-orange-50 transition-colors shadow-lg flex items-center gap-2">
@@ -96,7 +96,7 @@
     <section class="mb-16">
         <div class="text-center max-w-xl mx-auto mb-10">
             <span class="text-xs font-bold uppercase tracking-wider text-primary">Prinsip Kami</span>
-            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">Mengapa Memilih Odaplace?</h2>
+            <h2 class="text-2xl sm:text-3xl font-bold text-gray-900 mt-1">Mengapa Memilih ALLWEAR FASHION?</h2>
             <p class="text-xs sm:text-sm text-gray-500 mt-2">Nilai-nilai inti yang selalu menjadi fondasi dalam setiap layanan kami kepada Anda.</p>
         </div>
 
@@ -135,12 +135,47 @@
         </div>
     </section>
 
+    <!-- Informasi Profil Usaha Mikro -->
+    <section class="bg-white border border-gray-200 rounded-3xl p-8 sm:p-10 shadow-sm mb-16">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 border-b border-gray-100 pb-6 mb-6">
+            <div>
+                <span class="text-xs font-bold uppercase tracking-wider text-primary">Identitas Usaha</span>
+                <h2 class="text-2xl font-bold text-gray-900 mt-1">Profil Resmi ALLWEAR FASHION</h2>
+            </div>
+            <div class="inline-flex items-center gap-2 bg-orange-50 text-primary font-bold text-xs px-3.5 py-1.5 rounded-full border border-orange-200">
+                <i data-lucide="badge-check" class="w-4 h-4"></i> Usaha Mikro berjalan sejak: September 2026
+            </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+            <div>
+                <span class="text-xs text-gray-400 block mb-1">Alamat Kantor / Usaha</span>
+                <p class="font-medium text-gray-800 leading-relaxed">
+                    KP. SETU 2, Desa/Kelurahan Situ Udik, Kec. Cinungbulang, Kab. Bogor, Provinsi Jawa Barat Kode Pos: 16630
+                </p>
+            </div>
+            <div>
+                <span class="text-xs text-gray-400 block mb-1">Kontak Telepon / WhatsApp</span>
+                <p class="font-bold text-gray-900">
+                    <a href="https://wa.me/6288991682058" class="text-primary hover:underline">088991682058</a>
+                </p>
+                <span class="text-xs text-gray-500 block mt-1">Layanan pelanggan cepat & ramah</span>
+            </div>
+            <div>
+                <span class="text-xs text-gray-400 block mb-1">Email Resmi</span>
+                <p class="font-bold text-gray-900">
+                    <a href="mailto:allawearindfashion@gmail.com" class="text-primary hover:underline">allawearindfashion@gmail.com</a>
+                </p>
+                <span class="text-xs text-gray-500 block mt-1">Korespondensi bisnis & dukungan</span>
+            </div>
+        </div>
+    </section>
+
     <!-- Banner Call to Action -->
     <section class="rounded-3xl bg-gray-900 text-white p-8 sm:p-12 text-center relative overflow-hidden">
         <div class="relative max-w-xl mx-auto">
             <h2 class="text-2xl sm:text-3xl font-bold mb-3">Siap Menemukan Koleksi Terbaikmu?</h2>
             <p class="text-xs sm:text-sm text-gray-400 mb-6 leading-relaxed">
-                Mulai belanja sekarang dan nikmati gratis ongkir, promo harian, dan pembayaran mudah di Odaplace.
+                Mulai belanja sekarang dan nikmati gratis ongkir, promo harian, dan pembayaran mudah di ALLWEAR FASHION.
             </p>
             <a href="{{ route('products.index') }}" class="inline-flex items-center gap-2 bg-primary hover:bg-primary-hover text-white px-7 py-3.5 rounded-xl font-bold text-sm transition-colors shadow-lg shadow-orange-500/30">
                 <i data-lucide="shopping-cart" class="w-4 h-4"></i> Mulai Belanja Sekarang

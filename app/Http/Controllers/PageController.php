@@ -43,6 +43,6 @@ class PageController extends Controller
             'message' => 'required|string|max:2000',
         ]);
 
-        return back()->with('success', 'Pesan Anda berhasil dikirim! Tim Odaplace akan segera menghubungi Anda melalui email atau WhatsApp.');
+        return back()->with('success', 'Pesan Anda berhasil dikirim! Tim ALLWEAR FASHION akan segera menghubungi Anda melalui email atau WhatsApp.');
     }
 }

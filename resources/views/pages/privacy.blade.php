@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Kebijakan Privasi - Odaplace')
+@section('title', 'Kebijakan Privasi - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1180px] mx-auto px-4 lg:px-8 py-6">
@@ -18,7 +18,7 @@
             <div class="mb-4 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.16em] text-cyan-100">
                 <i data-lucide="lock" class="h-3.5 w-3.5"></i> Perlindungan Data Pribadi
             </div>
-            <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">Kebijakan Privasi Odaplace</h1>
+            <h1 class="text-3xl font-extrabold tracking-tight sm:text-4xl lg:text-5xl">Kebijakan Privasi ALLWEAR FASHION</h1>
             <p class="mt-4 max-w-xl text-sm leading-relaxed text-cyan-50/85 sm:text-base">
                 Kami berkomitmen menjaga kerahasiaan dan keamanan data pribadi Anda sesuai regulasi UU Perlindungan Data Pribadi (UU PDP) Republik Indonesia.
             </p>
@@ -47,8 +47,8 @@
 
                 <div class="mt-6 pt-5 border-t border-gray-100 text-xs text-gray-500">
                     <p class="mb-2">Pertanyaan tentang data pribadi?</p>
-                    <a href="mailto:privacy@odaplace.test" class="text-sky-600 font-bold hover:underline inline-flex items-center gap-1">
-                        privacy@odaplace.test
+                    <a href="mailto:allawearindfashion@gmail.com" class="text-sky-600 font-bold hover:underline inline-flex items-center gap-1 break-all">
+                        allawearindfashion@gmail.com
                     </a>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 </div>
                 <div class="text-sm text-gray-600 leading-relaxed space-y-3">
                     <p>
-                        Odaplace sangat menghargai privasi setiap individu yang mempercayakan data mereka kepada kami. Kebijakan ini menjelaskan bagaimana kami mengumpulkan, menggunakan, menyimpan, serta menjaga kerahasiaan informasi identitas pribadi (PII) Anda saat berbelanja di website Odaplace.
+                        ALLWEAR FASHION sangat menghargai privasi setiap individu yang mempercayakan data mereka kepada kami. Kebijakan ini menjelaskan bagaimana kami mengumpulkan, menggunakan, menyimpan, serta menjaga kerahasiaan informasi identitas pribadi (PII) Anda saat berbelanja di website ALLWEAR FASHION.
                     </p>
                     <p>
                         Kami mematuhi seluruh perundang-undangan dan peraturan yang berlaku di Indonesia mengenai perlindungan data pribadi dan transaksi elektronik.
@@ -141,7 +141,7 @@
                 </div>
                 <div class="text-sm text-gray-600 leading-relaxed space-y-3">
                     <p>
-                        <strong>Odaplace TIDAK AKAN PERNAH menjual atau menyewakan data pribadi Anda</strong> kepada pihak ketiga mana pun untuk tujuan periklanan tanpa izin eksplisit Anda.
+                        <strong>ALLWEAR FASHION TIDAK AKAN PERNAH menjual atau menyewakan data pribadi Anda</strong> kepada pihak ketiga mana pun untuk tujuan periklanan tanpa izin eksplisit Anda.
                     </p>
                     <p>
                         Data hanya dibagikan secara terbatas kepada mitra esensial berikut:

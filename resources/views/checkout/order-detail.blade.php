@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Detail Pesanan ' . $order['invoice_number'] . ' - Odaplace')
+@section('title', 'Detail Pesanan ' . $order['invoice_number'] . ' - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1280px] mx-auto px-4 lg:px-8 py-6">
@@ -169,7 +169,7 @@
                 <div class="flex items-center justify-between border-b border-gray-100 pb-4 mb-4">
                     <div class="flex items-center gap-2">
                         <span class="px-2 py-0.5 bg-primary/10 text-primary text-[11px] font-bold rounded">Official Store</span>
-                        <h2 class="text-base font-bold text-gray-900">Odaplace Mall</h2>
+                        <h2 class="text-base font-bold text-gray-900">ALLWEAR FASHION Official</h2>
                     </div>
                     <span class="text-xs text-gray-500">{{ count($order['items'] ?? []) }} Produk</span>
                 </div>

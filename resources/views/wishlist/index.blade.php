@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Wishlist - Odaplace')
+@section('title', 'Wishlist - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1440px] mx-auto px-4 lg:px-8">
