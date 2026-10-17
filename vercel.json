@@ -9,8 +9,12 @@
   },
   "routes": [
     {
-      "src": "/(css|js|images|build|assets|favicon.*|robots.txt)(.*)",
+      "src": "/(css|js|images|build|assets|favicon.*|allwear.*|robots.txt)(.*)",
       "dest": "/public/$1$2"
+    },
+    {
+      "src": "/(.*\\.(?:ico|png|jpg|jpeg|svg|webp|gif|woff|woff2|ttf|txt|xml))",
+      "dest": "/public/$1"
     },
     {
       "src": "/(.*)",
