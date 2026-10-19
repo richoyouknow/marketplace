@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
-use App\Models\ProductVariant;
 use App\Services\CartService;
 use App\Services\ProductCatalogService;
 use Illuminate\Http\RedirectResponse;
@@ -34,60 +33,81 @@ class CartController extends Controller
             'variant_id' => 'nullable|integer',
         ]);
 
-        $product = Product::with('activeVariants')->find($request->product_id);
+        $product = null;
+        try {
+            $product = Product::with('activeVariants')->find($request->product_id);
+        } catch (\Throwable $e) {
+            $product = null;
+        }
 
+        $rawProduct = null;
         if (! $product) {
-            return back()->with('error', 'Produk tidak ditemukan.');
+            $rawProduct = $this->productService->getAll()->firstWhere('id', (int) $request->product_id);
+            if (! $rawProduct) {
+                return back()->with('error', 'Produk tidak ditemukan.');
+            }
         }
 
         $variant = null;
+        $variants = $product ? $product->activeVariants : collect($rawProduct['variants'] ?? []);
+        $hasVariants = $variants->isNotEmpty();
 
-        if ($product->activeVariants->isNotEmpty()) {
+        if ($hasVariants) {
             // User must select a size if product has variants
             if (empty($request->size) && empty($request->variant_id)) {
                 return back()->with('error', 'Silakan pilih ukuran produk terlebih dahulu.');
             }
 
-            $variant = $product->activeVariants->first(function (ProductVariant $v) use ($request): bool {
+            $variant = $variants->first(function ($v) use ($request): bool {
+                $vId = is_array($v) ? $v['id'] : $v->id;
+                $vSize = is_array($v) ? $v['size'] : $v->size;
+
                 if ($request->filled('variant_id')) {
-                    return $v->id == $request->variant_id;
+                    return $vId == $request->variant_id;
                 }
 
-                return strtolower(trim((string) $v->size)) === strtolower(trim((string) $request->size));
+                return strtolower(trim((string) $vSize)) === strtolower(trim((string) $request->size));
             });
 
             if (! $variant) {
                 return back()->with('error', 'Ukuran yang Anda pilih tidak tersedia untuk produk ini.');
             }
 
+            $variantStock = is_array($variant) ? $variant['stock'] : $variant->stock;
+            $variantSize = is_array($variant) ? $variant['size'] : $variant->size;
+
             // Check variant stock
-            if ($variant->stock <= 0) {
-                return back()->with('error', 'Maaf, ukuran '.$variant->size.' saat ini sedang habis.');
+            if ($variantStock <= 0) {
+                return back()->with('error', 'Maaf, ukuran '.$variantSize.' saat ini sedang habis.');
             }
 
-            if ($request->quantity > $variant->stock) {
-                return back()->with('error', 'Jumlah yang diminta melebihi sisa stok ukuran '.$variant->size.' (Stok: '.$variant->stock.').');
+            if ($request->quantity > $variantStock) {
+                return back()->with('error', 'Jumlah yang diminta melebihi sisa stok ukuran '.$variantSize.' (Stok: '.$variantStock.').');
             }
         } else {
             // Product does not have size variants
-            if ($product->stock <= 0) {
+            $productStock = $product ? $product->stock : ($rawProduct['stock'] ?? 0);
+            if ($productStock <= 0) {
                 return back()->with('error', 'Maaf, produk ini saat ini sedang habis.');
             }
 
-            if ($request->quantity > $product->stock) {
-                return back()->with('error', 'Jumlah yang diminta melebihi sisa stok produk (Stok: '.$product->stock.').');
+            if ($request->quantity > $productStock) {
+                return back()->with('error', 'Jumlah yang diminta melebihi sisa stok produk (Stok: '.$productStock.').');
             }
         }
 
-        $this->cartService->add($product, $variant, (int) $request->quantity);
+        $targetProduct = $product ?? $rawProduct;
+        $this->cartService->add($targetProduct, $variant, (int) $request->quantity);
 
         if ($request->input('redirect') === 'checkout') {
             return redirect()->route('checkout.index');
         }
 
-        $sizeMsg = $variant ? ' (Ukuran: '.$variant->size.')' : '';
+        $variantSize = $variant ? (is_array($variant) ? $variant['size'] : $variant->size) : null;
+        $sizeMsg = $variantSize ? ' (Ukuran: '.$variantSize.')' : '';
+        $productName = is_array($targetProduct) ? $targetProduct['name'] : $targetProduct->name;
 
-        return back()->with('success', 'Produk '.$product->name.$sizeMsg.' berhasil ditambahkan ke keranjang!');
+        return back()->with('success', 'Produk '.$productName.$sizeMsg.' berhasil ditambahkan ke keranjang!');
     }
 
     public function update(Request $request, string $id): RedirectResponse

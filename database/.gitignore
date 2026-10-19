@@ -1,1 +1,2 @@
-*.sqlite*
+# Izinkan database.sqlite untuk dideploy ke serverless Vercel
+!database.sqlite

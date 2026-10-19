@@ -117,28 +117,32 @@ class OrderService
         Session::put($this->sessionKey, $orders);
 
         // Pengurangan stok di database setelah pesanan berhasil diproses
-        foreach ($cart as $item) {
-            $qty = (int) ($item['quantity'] ?? 1);
+        try {
+            foreach ($cart as $item) {
+                $qty = (int) ($item['quantity'] ?? 1);
 
-            if (! empty($item['variant_id'])) {
-                $variant = ProductVariant::find($item['variant_id']);
-                if ($variant) {
-                    $newStock = max(0, $variant->stock - $qty);
-                    $variant->update(['stock' => $newStock]);
+                if (! empty($item['variant_id'])) {
+                    $variant = ProductVariant::find($item['variant_id']);
+                    if ($variant) {
+                        $newStock = max(0, $variant->stock - $qty);
+                        $variant->update(['stock' => $newStock]);
+                    }
                 }
-            }
 
-            if (! empty($item['product_id'])) {
-                $product = Product::find($item['product_id']);
-                if ($product) {
-                    if ($product->hasVariants()) {
-                        $product->update(['stock' => (int) $product->variants()->sum('stock')]);
-                    } else {
-                        $newStock = max(0, $product->stock - $qty);
-                        $product->update(['stock' => $newStock]);
+                if (! empty($item['product_id'])) {
+                    $product = Product::find($item['product_id']);
+                    if ($product) {
+                        if ($product->hasVariants()) {
+                            $product->update(['stock' => (int) $product->variants()->sum('stock')]);
+                        } else {
+                            $newStock = max(0, $product->stock - $qty);
+                            $product->update(['stock' => $newStock]);
+                        }
                     }
                 }
             }
+        } catch (\Throwable $e) {
+            // Serverless safety
         }
 
         return $order;

@@ -83,13 +83,60 @@ class DummyProducts
                 [-6.2088, 106.8456]
             );
 
+            $cat = strtolower((string) $category);
+            $variants = [];
+            if (in_array($cat, ['kemeja', 'kaos'])) {
+                $variants = [
+                    ['id' => ($id * 10) + 1, 'product_id' => $id, 'size' => 'S', 'stock' => 10, 'additional_price' => 0, 'sku' => strtoupper($slug).'-S', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 2, 'product_id' => $id, 'size' => 'M', 'stock' => 15, 'additional_price' => 0, 'sku' => strtoupper($slug).'-M', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 3, 'product_id' => $id, 'size' => 'L', 'stock' => 12, 'additional_price' => 0, 'sku' => strtoupper($slug).'-L', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 4, 'product_id' => $id, 'size' => 'XL', 'stock' => 8, 'additional_price' => 0, 'sku' => strtoupper($slug).'-XL', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 5, 'product_id' => $id, 'size' => 'XXL', 'stock' => 0, 'additional_price' => 15000, 'sku' => strtoupper($slug).'-XXL', 'is_active' => true, 'is_available' => false, 'effective_price' => $price + 15000],
+                ];
+            } elseif ($cat === 'celana') {
+                $variants = [
+                    ['id' => ($id * 10) + 1, 'product_id' => $id, 'size' => '28', 'stock' => 6, 'additional_price' => 0, 'sku' => strtoupper($slug).'-28', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 2, 'product_id' => $id, 'size' => '30', 'stock' => 14, 'additional_price' => 0, 'sku' => strtoupper($slug).'-30', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 3, 'product_id' => $id, 'size' => '32', 'stock' => 10, 'additional_price' => 0, 'sku' => strtoupper($slug).'-32', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 4, 'product_id' => $id, 'size' => '34', 'stock' => 5, 'additional_price' => 0, 'sku' => strtoupper($slug).'-34', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 5, 'product_id' => $id, 'size' => '36', 'stock' => 0, 'additional_price' => 0, 'sku' => strtoupper($slug).'-36', 'is_active' => true, 'is_available' => false, 'effective_price' => $price],
+                ];
+            } elseif ($cat === 'alas kaki') {
+                $variants = [
+                    ['id' => ($id * 10) + 1, 'product_id' => $id, 'size' => '39', 'stock' => 5, 'additional_price' => 0, 'sku' => strtoupper($slug).'-39', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 2, 'product_id' => $id, 'size' => '40', 'stock' => 8, 'additional_price' => 0, 'sku' => strtoupper($slug).'-40', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 3, 'product_id' => $id, 'size' => '41', 'stock' => 12, 'additional_price' => 0, 'sku' => strtoupper($slug).'-41', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 4, 'product_id' => $id, 'size' => '42', 'stock' => 7, 'additional_price' => 0, 'sku' => strtoupper($slug).'-42', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 5, 'product_id' => $id, 'size' => '43', 'stock' => 0, 'additional_price' => 0, 'sku' => strtoupper($slug).'-43', 'is_active' => true, 'is_available' => false, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 6, 'product_id' => $id, 'size' => '44', 'stock' => 4, 'additional_price' => 0, 'sku' => strtoupper($slug).'-44', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                ];
+            } elseif ($cat === 'outer') {
+                $variants = [
+                    ['id' => ($id * 10) + 1, 'product_id' => $id, 'size' => 'S', 'stock' => 6, 'additional_price' => 0, 'sku' => strtoupper($slug).'-S', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 2, 'product_id' => $id, 'size' => 'M', 'stock' => 12, 'additional_price' => 0, 'sku' => strtoupper($slug).'-M', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 3, 'product_id' => $id, 'size' => 'L', 'stock' => 8, 'additional_price' => 0, 'sku' => strtoupper($slug).'-L', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 4, 'product_id' => $id, 'size' => 'XL', 'stock' => 0, 'additional_price' => 15000, 'sku' => strtoupper($slug).'-XL', 'is_active' => true, 'is_available' => false, 'effective_price' => $price + 15000],
+                ];
+            } elseif (in_array($cat, ['blouse', 'dress', 'rok'])) {
+                $variants = [
+                    ['id' => ($id * 10) + 1, 'product_id' => $id, 'size' => 'S', 'stock' => 8, 'additional_price' => 0, 'sku' => strtoupper($slug).'-S', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 2, 'product_id' => $id, 'size' => 'M', 'stock' => 14, 'additional_price' => 0, 'sku' => strtoupper($slug).'-M', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 3, 'product_id' => $id, 'size' => 'L', 'stock' => 10, 'additional_price' => 0, 'sku' => strtoupper($slug).'-L', 'is_active' => true, 'is_available' => true, 'effective_price' => $price],
+                    ['id' => ($id * 10) + 4, 'product_id' => $id, 'size' => 'XL', 'stock' => 0, 'additional_price' => 0, 'sku' => strtoupper($slug).'-XL', 'is_active' => true, 'is_available' => false, 'effective_price' => $price],
+                ];
+            }
+
+            $hasVariants = ! empty($variants);
+            $totalStock = $hasVariants ? array_sum(array_column($variants, 'stock')) : 40;
+
             return [
                 'id' => $id, 'slug' => $slug, 'name' => $name, 'description' => $description,
                 'price' => $price, 'original_price' => $originalPrice, 'discount_percentage' => $discount,
                 'category' => $category, 'brand' => $brand, 'image' => $image,
                 'gallery' => [$image], 'rating' => $rating, 'review_count' => $reviews, 'sold_count' => $sold,
-                'stock' => 40, 'min_order' => 1, 'condition' => 'Baru', 'availability' => 'Siap Dikirim',
-                'supplier' => 'Toko Terverifikasi', 'specifications' => $specifications, 'variants' => [],
+                'stock' => $totalStock, 'min_order' => 1, 'condition' => 'Baru', 'availability' => 'Siap Dikirim',
+                'supplier' => 'Toko Terverifikasi', 'specifications' => $specifications, 'variants' => $variants,
+                'has_variants' => $hasVariants,
                 'tags' => $tags, 'address' => $address, 'map_url' => $mapUrl,
                 'latitude' => $coordinates[0], 'longitude' => $coordinates[1],
                 'created_at' => now()->subDays($id),
