@@ -43,6 +43,12 @@
             <i data-lucide="map-pin" class="w-3.5 h-3.5 text-primary shrink-0"></i>
             <span class="truncate">{{ $product['address'] }}</span>
         </a>
+        @if(!empty($product['variants']))
+        <a href="{{ route('products.show', $product['slug']) }}" class="w-full flex items-center justify-center gap-2 bg-orange-50 text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary py-2.5 rounded-lg text-sm font-semibold transition-colors">
+            <i data-lucide="sliders" class="w-4 h-4"></i>
+            <span>Pilih Ukuran</span>
+        </a>
+        @else
         <form action="{{ route('cart.add') }}" method="POST">
             @csrf
             <input type="hidden" name="product_id" value="{{ $product['id'] }}">
@@ -52,5 +58,6 @@
                 <span>Tambah ke Keranjang</span>
             </button>
         </form>
+        @endif
     </div>
 </div>

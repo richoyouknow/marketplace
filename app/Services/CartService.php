@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Session;
 
 class CartService
@@ -13,56 +15,87 @@ class CartService
         return Session::get($this->sessionKey, []);
     }
 
-    public function add(array $product, int $quantity = 1): void
+    /**
+     * Add an item to the cart with optional size variant.
+     */
+    public function add(array|Product $product, array|ProductVariant|null $variant = null, int $quantity = 1): void
     {
         $cart = $this->getCart();
-        $id = $product['id'];
 
-        if (isset($cart[$id])) {
-            $cart[$id]['quantity'] += $quantity;
+        $productId = is_array($product) ? $product['id'] : $product->id;
+        $productSlug = is_array($product) ? $product['slug'] : $product->slug;
+        $productName = is_array($product) ? $product['name'] : $product->name;
+        $productBrand = is_array($product) ? $product['brand'] : $product->brand;
+        $productImage = is_array($product) ? $product['image'] : $product->image;
+        $basePrice = is_array($product) ? (int) $product['price'] : (int) $product->price;
+
+        $variantId = null;
+        $size = null;
+        $additionalPrice = 0;
+        $stock = is_array($product) ? (int) $product['stock'] : (int) $product->stock;
+
+        if ($variant !== null) {
+            $variantId = is_array($variant) ? $variant['id'] : $variant->id;
+            $size = is_array($variant) ? $variant['size'] : $variant->size;
+            $additionalPrice = is_array($variant) ? (int) ($variant['additional_price'] ?? 0) : (int) $variant->additional_price;
+            $stock = is_array($variant) ? (int) $variant['stock'] : (int) $variant->stock;
+        }
+
+        $effectivePrice = $basePrice + $additionalPrice;
+        $itemKey = $variantId ? "{$productId}_{$variantId}" : (string) $productId;
+
+        if (isset($cart[$itemKey])) {
+            $cart[$itemKey]['quantity'] += $quantity;
         } else {
-            $cart[$id] = [
-                'id' => $product['id'],
-                'slug' => $product['slug'],
-                'name' => $product['name'],
-                'price' => $product['price'],
-                'image' => $product['image'],
-                'brand' => $product['brand'],
-                'stock' => $product['stock'],
+            $cart[$itemKey] = [
+                'id' => $itemKey,
+                'cart_item_key' => $itemKey,
+                'product_id' => $productId,
+                'variant_id' => $variantId,
+                'size' => $size,
+                'slug' => $productSlug,
+                'name' => $productName,
+                'brand' => $productBrand,
+                'image' => $productImage,
+                'base_price' => $basePrice,
+                'additional_price' => $additionalPrice,
+                'price' => $effectivePrice,
+                'stock' => $stock,
                 'quantity' => $quantity,
             ];
         }
 
-        // Validate stock
-        if ($cart[$id]['quantity'] > $product['stock']) {
-            $cart[$id]['quantity'] = $product['stock'];
+        // Validate against stock
+        if ($cart[$itemKey]['quantity'] > $stock) {
+            $cart[$itemKey]['quantity'] = max(1, $stock);
         }
 
         Session::put($this->sessionKey, $cart);
     }
 
-    public function update(int $id, int $quantity): void
+    public function update(string|int $id, int $quantity): void
     {
         $cart = $this->getCart();
+        $key = (string) $id;
 
-        if (isset($cart[$id])) {
+        if (isset($cart[$key])) {
             if ($quantity <= 0) {
-                unset($cart[$id]);
+                unset($cart[$key]);
             } else {
-                // We should ideally check stock again here, but since it's demo...
-                // Assuming max stock check is handled in UI
-                $cart[$id]['quantity'] = $quantity;
+                $maxStock = $cart[$key]['stock'] ?? 999;
+                $cart[$key]['quantity'] = min($quantity, $maxStock);
             }
             Session::put($this->sessionKey, $cart);
         }
     }
 
-    public function remove(int $id): void
+    public function remove(string|int $id): void
     {
         $cart = $this->getCart();
+        $key = (string) $id;
 
-        if (isset($cart[$id])) {
-            unset($cart[$id]);
+        if (isset($cart[$key])) {
+            unset($cart[$key]);
             Session::put($this->sessionKey, $cart);
         }
     }

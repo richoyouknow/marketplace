@@ -33,6 +33,17 @@
                         <a href="{{ route('products.show', $item['slug']) }}" class="font-bold text-gray-900 text-lg hover:text-primary transition-colors line-clamp-2 mb-2">
                             {{ $item['name'] }}
                         </a>
+                        @if(!empty($item['size']))
+                        <div class="mb-2">
+                            <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-xs font-bold bg-orange-50 text-orange-800 border border-orange-200">
+                                <i data-lucide="ruler" class="w-3.5 h-3.5 text-primary"></i>
+                                Ukuran: <strong class="text-primary">{{ $item['size'] }}</strong>
+                                @if(!empty($item['additional_price']) && $item['additional_price'] > 0)
+                                <span class="text-gray-500 font-normal text-[11px]">(+Rp {{ number_format($item['additional_price'], 0, ',', '.') }})</span>
+                                @endif
+                            </span>
+                        </div>
+                        @endif
                         <div class="text-xl font-bold text-gray-900">Rp {{ number_format($item['price'], 0, ",", ".") }}</div>
                     </div>
                     

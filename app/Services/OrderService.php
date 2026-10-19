@@ -2,6 +2,8 @@
 
 namespace App\Services;
 
+use App\Models\Product;
+use App\Models\ProductVariant;
 use Illuminate\Support\Facades\Session;
 
 class OrderService
@@ -113,6 +115,31 @@ class OrderService
         $orders = Session::get($this->sessionKey, []);
         $orders[$orderId] = $order;
         Session::put($this->sessionKey, $orders);
+
+        // Pengurangan stok di database setelah pesanan berhasil diproses
+        foreach ($cart as $item) {
+            $qty = (int) ($item['quantity'] ?? 1);
+
+            if (! empty($item['variant_id'])) {
+                $variant = ProductVariant::find($item['variant_id']);
+                if ($variant) {
+                    $newStock = max(0, $variant->stock - $qty);
+                    $variant->update(['stock' => $newStock]);
+                }
+            }
+
+            if (! empty($item['product_id'])) {
+                $product = Product::find($item['product_id']);
+                if ($product) {
+                    if ($product->hasVariants()) {
+                        $product->update(['stock' => (int) $product->variants()->sum('stock')]);
+                    } else {
+                        $newStock = max(0, $product->stock - $qty);
+                        $product->update(['stock' => $newStock]);
+                    }
+                }
+            }
+        }
 
         return $order;
     }

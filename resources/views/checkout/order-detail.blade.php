@@ -193,6 +193,11 @@
                                     @if(!empty($item['brand']))
                                     <span class="text-xs text-gray-400 mt-0.5 block">Brand: {{ $item['brand'] }}</span>
                                     @endif
+                                    @if(!empty($item['size']))
+                                    <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded font-bold bg-orange-50 text-orange-800 border border-orange-200 mt-1">
+                                        <i data-lucide="ruler" class="w-3 h-3 text-primary"></i> Ukuran: {{ $item['size'] }}
+                                    </span>
+                                    @endif
                                     <span class="text-xs text-gray-500 mt-1 block">
                                         {{ $item['quantity'] }} x Rp {{ number_format($item['price'], 0, ',', '.') }}
                                     </span>

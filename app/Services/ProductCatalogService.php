@@ -3,8 +3,12 @@
 namespace App\Services;
 
 use App\Data\DummyProducts;
+use App\Models\Product;
+use App\Models\ProductVariant;
+use Database\Seeders\ProductSeeder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 
 class ProductCatalogService
 {
@@ -12,7 +16,83 @@ class ProductCatalogService
 
     public function __construct()
     {
-        $this->products = collect(DummyProducts::get());
+        $this->loadProducts();
+    }
+
+    public function loadProducts(): void
+    {
+        $dbProducts = Product::with('activeVariants')->get();
+
+        if ($dbProducts->isEmpty()) {
+            // Auto seed if empty
+            try {
+                Artisan::call('db:seed', [
+                    '--class' => ProductSeeder::class,
+                    '--force' => true,
+                ]);
+                $dbProducts = Product::with('activeVariants')->get();
+            } catch (\Throwable $e) {
+                // Fallback to DummyProducts if migration/db issue
+                $this->products = collect(DummyProducts::get());
+
+                return;
+            }
+        }
+
+        $this->products = $dbProducts->map(function (Product $product): array {
+            $variants = $product->activeVariants->map(fn (ProductVariant $v): array => [
+                'id' => $v->id,
+                'product_id' => $v->product_id,
+                'size' => $v->size,
+                'stock' => (int) $v->stock,
+                'additional_price' => (int) $v->additional_price,
+                'sku' => $v->sku,
+                'is_active' => (bool) $v->is_active,
+                'is_available' => $v->isAvailable(),
+                'effective_price' => $v->effective_price,
+            ])->values()->all();
+
+            $hasVariants = ! empty($variants);
+            $totalStock = $hasVariants ? array_sum(array_column($variants, 'stock')) : (int) $product->stock;
+
+            return [
+                'id' => $product->id,
+                'slug' => $product->slug,
+                'name' => $product->name,
+                'description' => $product->description,
+                'price' => (int) $product->price,
+                'original_price' => $product->original_price ? (int) $product->original_price : null,
+                'discount_percentage' => (int) $product->discount_percentage,
+                'category' => $product->category,
+                'brand' => $product->brand,
+                'image' => $product->image,
+                'gallery' => $product->gallery ?? [$product->image],
+                'rating' => (float) $product->rating,
+                'review_count' => (int) $product->review_count,
+                'sold_count' => (int) $product->sold_count,
+                'stock' => $totalStock,
+                'min_order' => (int) $product->min_order,
+                'condition' => $product->condition,
+                'availability' => $product->availability,
+                'supplier' => $product->supplier,
+                'specifications' => $product->specifications ?? [],
+                'variants' => $variants,
+                'has_variants' => $hasVariants,
+                'tags' => $product->tags ?? [],
+                'address' => $product->address,
+                'map_url' => $product->map_url,
+                'latitude' => $product->latitude,
+                'longitude' => $product->longitude,
+                'created_at' => $product->created_at,
+            ];
+        });
+    }
+
+    public function refresh(): self
+    {
+        $this->loadProducts();
+
+        return $this;
     }
 
     public function getAll(): Collection

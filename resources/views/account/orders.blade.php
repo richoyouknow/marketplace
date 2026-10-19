@@ -55,9 +55,16 @@
                             </div>
                             <div class="flex-1 min-w-0">
                                 <h4 class="font-bold text-sm text-gray-900 truncate">{{ $item['name'] }}</h4>
-                                <span class="text-xs text-gray-500 block mt-0.5">
-                                    {{ $item['quantity'] }} x Rp {{ number_format($item['price'], 0, ',', '.') }}
-                                </span>
+                                <div class="flex items-center gap-2 mt-0.5">
+                                    @if(!empty($item['size']))
+                                    <span class="text-[11px] font-bold text-orange-700 bg-orange-50 border border-orange-200 px-1.5 py-0.2 rounded">
+                                        Ukuran: {{ $item['size'] }}
+                                    </span>
+                                    @endif
+                                    <span class="text-xs text-gray-500">
+                                        {{ $item['quantity'] }} x Rp {{ number_format($item['price'], 0, ',', '.') }}
+                                    </span>
+                                </div>
                             </div>
                         </div>
                         @endforeach

@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductController;
+use App\Http\Controllers\Admin\AdminProductVariantController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\HomeController;
@@ -60,3 +62,14 @@ Route::get('/lang/{locale}', function (string $locale) {
 
     return back();
 })->name('lang.switch');
+
+// Panel Admin - Manajemen Produk & Variasi Ukuran (Size Variants)
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::get('/', [AdminProductController::class, 'index'])->name('dashboard');
+    Route::get('/products', [AdminProductController::class, 'index'])->name('products.index');
+    Route::get('/products/{product}/variants', [AdminProductVariantController::class, 'index'])->name('products.variants.index');
+    Route::post('/products/{product}/variants', [AdminProductVariantController::class, 'store'])->name('products.variants.store');
+    Route::put('/variants/{variant}', [AdminProductVariantController::class, 'update'])->name('variants.update');
+    Route::delete('/variants/{variant}', [AdminProductVariantController::class, 'destroy'])->name('variants.destroy');
+    Route::post('/products/{product}/variants/presets', [AdminProductVariantController::class, 'applyPreset'])->name('products.variants.preset');
+});

@@ -146,6 +146,11 @@
                         </div>
                         <div class="flex-1 min-w-0">
                             <h4 class="text-sm font-medium text-gray-900 line-clamp-2 leading-snug">{{ $item['name'] }}</h4>
+                            @if(!empty($item['size']))
+                            <span class="inline-block px-1.5 py-0.5 rounded text-[11px] font-bold bg-orange-50 text-orange-800 border border-orange-200 mt-0.5">
+                                Ukuran: {{ $item['size'] }}
+                            </span>
+                            @endif
                             <span class="text-sm font-bold text-gray-900 mt-1 block">Rp {{ number_format($item['price'], 0, ",", ".") }}</span>
                         </div>
                     </div>

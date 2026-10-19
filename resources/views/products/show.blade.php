@@ -68,93 +68,241 @@
                     <span class="text-gray-500">{{ $product['sold_count'] }} Terjual</span>
                 </div>
                 
-                <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 mb-8">
-                    <div class="flex items-end gap-3 mb-2">
-                        <span class="text-3xl md:text-4xl font-bold text-gray-900">Rp {{ number_format($product['price'], 0, ",", ".") }}</span>
-                        @if($product['discount_percentage'] > 0)
-                        <span class="text-lg text-gray-400 line-through mb-1">Rp {{ number_format($product['original_price'], 0, ",", ".") }}</span>
-                        <span class="text-sm font-bold text-red-500 mb-1.5">{{ $product['discount_percentage'] }}% DISKON</span>
-                        @endif
-                    </div>
-                    <div class="text-sm text-gray-500 flex items-center gap-2">
-                        <i data-lucide="truck" class="w-4 h-4"></i> Gratis ongkir untuk pesanan di atas Rp 500.000
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mb-8 text-sm">
-                    <div>
-                        <span class="text-gray-500 block mb-1">Availability</span>
-                        <span class="font-medium text-green-600 flex items-center gap-1"><i data-lucide="check-circle-2" class="w-4 h-4"></i> Tersedia ({{ $product['stock'] }})</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-500 block mb-1">Condition</span>
-                        <span class="font-medium text-gray-900">{{ $product['condition'] }}</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-500 block mb-1">Pesanan Minimum</span>
-                        <span class="font-medium text-gray-900">{{ $product['min_order'] }} buah</span>
-                    </div>
-                    <div>
-                        <span class="text-gray-500 block mb-1">Supplier</span>
-                        <span class="font-medium text-gray-900">{{ $product['supplier'] }}</span>
-                    </div>
-                </div>
-
-                <div class="rounded-xl border border-orange-100 bg-orange-50/70 p-4 mb-8">
-                    <div class="flex items-start gap-3">
-                        <div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shrink-0 shadow-sm">
-                            <i data-lucide="map-pin" class="w-5 h-5"></i>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Barang terdekat dari lokasi</p>
-                            <p class="text-sm font-medium text-gray-900 leading-relaxed">{{ $product['address'] }}</p>
-                            <a href="{{ $product['map_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-2 text-sm font-bold text-primary hover:underline">
-                                Buka alamat asli di Google Maps <i data-lucide="external-link" class="w-4 h-4"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                
-                <hr class="border-gray-200 mb-8">
-
-                <!-- Actions -->
-                <form action="{{ route('cart.add') }}" method="POST" class="mt-auto space-y-4">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+                <div x-data="{
+                    hasVariants: {{ !empty($product['variants']) ? 'true' : 'false' }},
+                    variants: {{ Js::from($product['variants'] ?? []) }},
+                    basePrice: {{ (int) $product['price'] }},
+                    selectedVariant: null,
+                    selectedSize: '',
+                    selectedVariantId: '',
+                    selectedStock: {{ (int) $product['stock'] }},
+                    additionalPrice: 0,
+                    qty: 1,
+                    showValidationAlert: false,
                     
-                    <div class="flex items-center gap-4 mb-6">
-                        <span class="text-gray-900 font-medium">Jumlah:</span>
-                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden w-32" x-data="{ qty: 1, max: {{ $product['stock'] }} }">
-                            <button type="button" @click="if(qty > 1) qty--" class="w-10 h-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-600 transition">-</button>
-                            <input type="number" name="quantity" x-model="qty" min="1" :max="max" class="w-full h-10 text-center font-bold text-gray-900 border-x border-gray-300 focus:outline-none appearance-none m-0 p-0">
-                            <button type="button" @click="if(qty < max) qty++" class="w-10 h-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-600 transition">+</button>
+                    selectSize(v) {
+                        if (!v || v.stock <= 0) return;
+                        this.selectedVariant = v;
+                        this.selectedVariantId = v.id;
+                        this.selectedSize = v.size;
+                        this.selectedStock = v.stock;
+                        this.additionalPrice = v.additional_price || 0;
+                        this.showValidationAlert = false;
+                        if (this.qty > v.stock) {
+                            this.qty = Math.max(1, v.stock);
+                        }
+                    },
+                    
+                    get currentPrice() {
+                        return this.basePrice + (this.selectedVariant ? (this.selectedVariant.additional_price || 0) : 0);
+                    },
+                    
+                    handleSubmit(isBuyNow = false) {
+                        if (this.hasVariants && !this.selectedSize) {
+                            this.showValidationAlert = true;
+                            document.getElementById('sizeSelectionArea')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            return;
+                        }
+                        
+                        if (isBuyNow) {
+                            document.getElementById('buyNowForm').submit();
+                        } else {
+                            document.getElementById('addToCartForm').submit();
+                        }
+                    }
+                }" class="flex flex-col flex-1">
+                    
+                    <!-- Price Box -->
+                    <div class="bg-gray-50 p-6 rounded-xl border border-gray-100 mb-8">
+                        <div class="flex flex-wrap items-baseline gap-3 mb-2">
+                            <span class="text-3xl md:text-4xl font-bold text-gray-900" x-text="'Rp ' + currentPrice.toLocaleString('id-ID')">
+                                Rp {{ number_format($product['price'], 0, ",", ".") }}
+                            </span>
+                            <template x-if="additionalPrice > 0">
+                                <span class="text-xs font-bold text-orange-700 bg-orange-100 border border-orange-200 px-2.5 py-1 rounded-full">
+                                    +Rp <span x-text="additionalPrice.toLocaleString('id-ID')"></span> (Ukuran <span x-text="selectedSize"></span>)
+                                </span>
+                            </template>
+                            @if($product['discount_percentage'] > 0)
+                            <span class="text-lg text-gray-400 line-through">Rp {{ number_format($product['original_price'], 0, ",", ".") }}</span>
+                            <span class="text-sm font-bold text-red-500">{{ $product['discount_percentage'] }}% DISKON</span>
+                            @endif
                         </div>
-                        <span class="text-sm text-gray-400">{{ $product['stock'] }} buah tersedia</span>
+                        <div class="text-sm text-gray-500 flex items-center gap-2">
+                            <i data-lucide="truck" class="w-4 h-4 text-primary"></i> Gratis ongkir untuk pesanan di atas Rp 500.000
+                        </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-orange-500/30">
-                            <i data-lucide="shopping-cart" class="w-5 h-5"></i> Tambah ke Keranjang
-                        </button>
-                        <a href="{{ route('checkout.index') }}" onclick="event.preventDefault(); document.getElementById('buy-now-form').submit();" class="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-gray-900/20">
-                            Buy Now
-                        </a>
+                    <!-- Pilihan Ukuran Produk (Kondisional: Hanya tampil jika produk punya varian) -->
+                    @if(!empty($product['variants']))
+                    <div id="sizeSelectionArea" class="mb-8 p-5 rounded-2xl border transition-all duration-200"
+                         :class="showValidationAlert ? 'bg-red-50/60 border-red-300 ring-2 ring-red-200' : 'bg-gray-50/50 border-gray-200'">
+                        
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex items-center gap-2">
+                                <label class="text-sm font-bold text-gray-900 uppercase tracking-wider flex items-center gap-1.5">
+                                    <i data-lucide="ruler" class="w-4 h-4 text-primary"></i>
+                                    Pilih Ukuran:
+                                </label>
+                                <template x-if="selectedSize">
+                                    <span class="text-xs font-bold px-2 py-0.5 rounded bg-primary/10 text-primary border border-primary/20">
+                                        Terpilih: <strong x-text="selectedSize"></strong>
+                                    </span>
+                                </template>
+                                <template x-if="!selectedSize">
+                                    <span class="text-xs text-red-500 font-medium">
+                                        *Wajib memilih ukuran
+                                    </span>
+                                </template>
+                            </div>
+                            <span class="text-xs text-gray-500" x-show="selectedVariant">
+                                Sisa stok ukuran ini: <strong class="text-gray-900 font-bold" x-text="selectedStock"></strong> buah
+                            </span>
+                        </div>
+
+                        <!-- Alert Validasi Jika Belum Memilih Ukuran -->
+                        <div x-show="showValidationAlert" x-transition class="mb-4 p-3 bg-red-100 border border-red-200 rounded-xl flex items-center gap-2 text-xs font-bold text-red-700">
+                            <i data-lucide="alert-circle" class="w-4 h-4 shrink-0"></i>
+                            <span>Silakan pilih salah satu ukuran produk di bawah ini sebelum melanjutkan!</span>
+                        </div>
+
+                        <!-- Interactive Variant Buttons -->
+                        <div class="flex flex-wrap items-center gap-3">
+                            @foreach($product['variants'] as $v)
+                            @php
+                                $isAvailable = $v['stock'] > 0 && ($v['is_active'] ?? true);
+                            @endphp
+                            <button type="button"
+                                    @if($isAvailable)
+                                    @click="selectSize({{ Js::from($v) }})"
+                                    :class="selectedVariantId === {{ $v['id'] }} 
+                                        ? 'border-primary bg-primary text-white shadow-md shadow-orange-500/30 scale-105' 
+                                        : 'border-gray-300 bg-white text-gray-800 hover:border-primary hover:text-primary'"
+                                    @else
+                                    disabled
+                                    class="border-gray-200 bg-gray-100 text-gray-400 cursor-not-allowed opacity-60 line-through"
+                                    @endif
+                                    class="min-w-[52px] h-13 px-4 rounded-xl border-2 font-bold text-sm flex flex-col items-center justify-center transition-all duration-150 relative group">
+                                
+                                <span class="text-base">{{ $v['size'] }}</span>
+                                
+                                @if(!$isAvailable)
+                                <span class="text-[9px] font-bold text-red-500 no-underline block leading-tight">Habis</span>
+                                @elseif($v['additional_price'] > 0)
+                                <span class="text-[9px] block leading-tight font-medium" :class="selectedVariantId === {{ $v['id'] }} ? 'text-white' : 'text-orange-600'">
+                                    +{{ number_format($v['additional_price'] / 1000, 0) }}k
+                                </span>
+                                @endif
+                            </button>
+                            @endforeach
+                        </div>
+
+                        <!-- Status Keterangan Ukuran -->
+                        <div class="mt-3.5 flex flex-wrap items-center gap-4 text-xs text-gray-400 border-t border-gray-200/60 pt-3">
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-white border-2 border-primary"></span> Dapat Dipilih</span>
+                            <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-gray-300"></span> Habis / Tidak Tersedia</span>
+                        </div>
                     </div>
-                </form>
-                
-                <form id="buy-now-form" action="{{ route('cart.add') }}" method="POST" class="hidden">
-                    @csrf
-                    <input type="hidden" name="product_id" value="{{ $product['id'] }}">
-                    <input type="hidden" name="quantity" value="1">
-                    <input type="hidden" name="redirect" value="checkout">
-                </form>
-                
-                <div class="mt-6 flex items-center justify-center">
-                    <button class="flex items-center gap-2 text-gray-500 hover:text-red-500 font-medium transition">
-                        <i data-lucide="heart" class="w-5 h-5"></i> Add to Wishlist
-                    </button>
+                    @endif
+
+                    <!-- Detail Ketersediaan & Info Singkat -->
+                    <div class="grid grid-cols-2 gap-4 mb-8 text-sm">
+                        <div>
+                            <span class="text-gray-500 block mb-1">Availability</span>
+                            <template x-if="hasVariants && selectedVariant">
+                                <span class="font-medium flex items-center gap-1" :class="selectedStock > 0 ? 'text-green-600' : 'text-red-600'">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4" x-show="selectedStock > 0"></i>
+                                    <i data-lucide="x-circle" class="w-4 h-4" x-show="selectedStock <= 0"></i>
+                                    <span x-text="selectedStock > 0 ? 'Tersedia (' + selectedStock + ' untuk ' + selectedSize + ')' : 'Ukuran ' + selectedSize + ' Habis'"></span>
+                                </span>
+                            </template>
+                            <template x-if="!hasVariants || !selectedVariant">
+                                <span class="font-medium text-green-600 flex items-center gap-1">
+                                    <i data-lucide="check-circle-2" class="w-4 h-4"></i> Tersedia ({{ $product['stock'] }} buah)
+                                </span>
+                            </template>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block mb-1">Condition</span>
+                            <span class="font-medium text-gray-900">{{ $product['condition'] }}</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block mb-1">Pesanan Minimum</span>
+                            <span class="font-medium text-gray-900">{{ $product['min_order'] }} buah</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-500 block mb-1">Supplier</span>
+                            <span class="font-medium text-gray-900">{{ $product['supplier'] }}</span>
+                        </div>
+                    </div>
+
+                    <!-- Lokasi Toko -->
+                    <div class="rounded-xl border border-orange-100 bg-orange-50/70 p-4 mb-8">
+                        <div class="flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shrink-0 shadow-sm">
+                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Barang terdekat dari lokasi</p>
+                                <p class="text-sm font-medium text-gray-900 leading-relaxed">{{ $product['address'] }}</p>
+                                <a href="{{ $product['map_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-2 text-sm font-bold text-primary hover:underline">
+                                    Buka alamat asli di Google Maps <i data-lucide="external-link" class="w-4 h-4"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <hr class="border-gray-200 mb-8">
+
+                    <!-- Actions & Quantity -->
+                    <div class="mt-auto space-y-4">
+                        <div class="flex items-center gap-4 mb-6">
+                            <span class="text-gray-900 font-medium">Jumlah:</span>
+                            <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden w-32">
+                                <button type="button" @click="if(qty > 1) qty--" class="w-10 h-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-600 transition font-bold">-</button>
+                                <input type="number" x-model.number="qty" min="1" :max="selectedStock" class="w-full h-10 text-center font-bold text-gray-900 border-x border-gray-300 focus:outline-none appearance-none m-0 p-0">
+                                <button type="button" @click="if(qty < selectedStock) qty++" class="w-10 h-10 flex items-center justify-center bg-gray-50 hover:bg-gray-100 text-gray-600 transition font-bold">+</button>
+                            </div>
+                            <span class="text-sm text-gray-500">
+                                <span class="font-bold text-gray-900" x-text="selectedStock"></span> buah tersedia
+                            </span>
+                        </div>
+
+                        <!-- Form Tambah ke Keranjang -->
+                        <form id="addToCartForm" action="{{ route('cart.add') }}" method="POST" @submit.prevent="handleSubmit(false)">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+                            <input type="hidden" name="quantity" :value="qty">
+                            <input type="hidden" name="size" :value="selectedSize">
+                            <input type="hidden" name="variant_id" :value="selectedVariantId">
+                            
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                <button type="submit" class="w-full bg-primary hover:bg-primary-hover text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-orange-500/30">
+                                    <i data-lucide="shopping-cart" class="w-5 h-5"></i> Tambah ke Keranjang
+                                </button>
+                                <button type="button" @click="handleSubmit(true)" class="w-full bg-gray-900 hover:bg-black text-white py-4 rounded-xl font-bold text-lg flex items-center justify-center gap-2 transition-colors shadow-lg shadow-gray-900/20">
+                                    Buy Now
+                                </button>
+                            </div>
+                        </form>
+                        
+                        <!-- Form Buy Now (redirect to checkout) -->
+                        <form id="buyNowForm" action="{{ route('cart.add') }}" method="POST" class="hidden">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $product['id'] }}">
+                            <input type="hidden" name="quantity" :value="qty">
+                            <input type="hidden" name="size" :value="selectedSize">
+                            <input type="hidden" name="variant_id" :value="selectedVariantId">
+                            <input type="hidden" name="redirect" value="checkout">
+                        </form>
+                        
+                        <div class="mt-6 flex items-center justify-center">
+                            <button type="button" class="flex items-center gap-2 text-gray-500 hover:text-red-500 font-medium transition">
+                                <i data-lucide="heart" class="w-5 h-5"></i> Add to Wishlist
+                            </button>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
     
