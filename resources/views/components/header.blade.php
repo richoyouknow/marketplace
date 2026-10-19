@@ -59,10 +59,7 @@
                         <span class="absolute -top-2 -right-2 bg-primary text-white text-[10px] font-bold px-1.5 py-0.5 rounded-full min-w-[18px] text-center">{{ $cartCount }}</span>
                         @endif
                     </a>
-                    <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1.5 bg-gray-900 hover:bg-black text-white text-xs font-semibold px-3 py-2 rounded-full transition-colors shadow-xs" title="Kelola Ukuran & Stok">
-                        <i data-lucide="shield" class="w-3.5 h-3.5 text-orange-400"></i>
-                        <span class="hidden sm:inline">Panel Admin</span>
-                    </a>
+
                     <a href="{{ route('login') }}" class="inline-flex items-center gap-1.5 bg-primary hover:bg-primary-hover text-white text-xs sm:text-sm font-semibold px-4 py-2 rounded-full transition-colors shadow-xs">
                         <i data-lucide="log-in" class="w-4 h-4"></i>
                         <span>Masuk</span>
