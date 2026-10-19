@@ -43,7 +43,7 @@
                             </svg>
                         </a>
                         <!-- Instagram -->
-                        <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+                        <a href="https://www.instagram.com/allwearfashion.id?mdxt=ZGg1aXZreWp6aDJv" target="_blank" rel="noopener noreferrer" 
                            class="w-10 h-10 rounded-full bg-pink-50 text-pink-600 border border-pink-200 flex items-center justify-center hover:bg-pink-600 hover:text-white hover:scale-110 transition-all shadow-xs" 
                            title="Instagram @allwearfashion" aria-label="Instagram">
                             <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24">
