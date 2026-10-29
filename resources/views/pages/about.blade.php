@@ -21,7 +21,7 @@
                 Mendefinisikan Ulang Pengalaman Belanja Anda
             </h1>
             <p class="mt-5 text-sm sm:text-base leading-relaxed text-white/90">
-                <strong>ALLWEAR FASHION</strong> lahir untuk menghadirkan platform belanja daring yang menghubungkan produk berkualitas, kurasi gaya fashion terkini, serta kecepatan logistik yang aman ke seluruh penjuru Indonesia.
+                <strong>ALLWEAR FASHION</strong> lahir untuk menghadirkan brand fashion terpercaya yang menghadirkan pakaian berkualitas tinggi, kurasi gaya modern terkini, serta pengalaman berbelanja langsung dari koleksi resmi Allwear ke seluruh penjuru Indonesia.
             </p>
             <div class="mt-8 flex flex-wrap gap-4">
                 <a href="{{ route('products.index') }}" class="px-6 py-3.5 rounded-xl bg-white text-gray-900 font-bold text-sm hover:bg-orange-50 transition-colors shadow-lg flex items-center gap-2">
@@ -66,7 +66,7 @@
             </div>
             <h2 class="text-2xl font-bold text-gray-900 mb-3">Visi Kami</h2>
             <p class="text-sm text-gray-600 leading-relaxed">
-                Menjadi platform marketplace pilihan utama di Indonesia yang dipercaya karena transparansi, kemudahan akses lokasi penjual terdekat, serta kurasi produk berkualitas yang meningkatkan gaya hidup konsumen.
+                Menjadi brand fashion modern pilihan utama di Indonesia yang dipercaya karena kualitas busana terbaik, orisinalitas produk resmi, serta standar layanan pelanggan yang unggul.
             </p>
         </div>
 
@@ -114,7 +114,7 @@
                     <i data-lucide="map-pin" class="w-5 h-5"></i>
                 </div>
                 <h3 class="font-bold text-gray-900 text-sm mb-2">Pencarian Terdekat</h3>
-                <p class="text-xs text-gray-500 leading-relaxed">Fitur pintar mencari stok barang dari seller atau gudang terdekat dengan lokasi Anda.</p>
+                <p class="text-xs text-gray-500 leading-relaxed">Fitur pintar mencari ketersediaan koleksi dari pusat pemenuhan resmi ALLWEAR terdekat dengan lokasi Anda.</p>
             </div>
 
             <div class="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:border-orange-300 transition-colors">

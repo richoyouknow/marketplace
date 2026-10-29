@@ -42,9 +42,14 @@
             <!-- Product Info -->
             <div class="flex flex-col">
                 <div class="flex items-center gap-2 mb-3">
-                    <span class="text-sm font-bold text-gray-400 uppercase tracking-wider">{{ $product['brand'] }}</span>
+                    <span class="inline-flex items-center gap-1 text-xs font-bold text-primary bg-primary/10 px-2.5 py-1 rounded-full uppercase tracking-wider">
+                        <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> ALLWEAR Official
+                    </span>
                     @if(in_array('best seller', $product['tags']))
                     <span class="bg-orange-100 text-orange-600 text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Terlaris</span>
+                    @endif
+                    @if(in_array('new', $product['tags']))
+                    <span class="bg-blue-100 text-blue-600 text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider">Baru</span>
                     @endif
                 </div>
                 
@@ -155,9 +160,17 @@
                                     </span>
                                 </template>
                             </div>
-                            <span class="text-xs text-gray-500" x-show="selectedVariant">
-                                Sisa stok ukuran ini: <strong class="text-gray-900 font-bold" x-text="selectedStock"></strong> buah
-                            </span>
+                            <div class="flex items-center gap-3">
+                                <span class="text-xs text-gray-500" x-show="selectedVariant">
+                                    Sisa stok: <strong class="text-gray-900 font-bold" x-text="selectedStock"></strong> buah
+                                </span>
+                                @if(!empty($product['size_chart']))
+                                <button type="button" @click="document.dispatchEvent(new CustomEvent('switch-tab', { detail: 'size_chart' })); document.getElementById('product-specs-section')?.scrollIntoView({ behavior: 'smooth' });" class="text-xs font-semibold text-primary hover:text-orange-600 transition flex items-center gap-1 underline underline-offset-2">
+                                    <i data-lucide="ruler" class="w-3.5 h-3.5"></i>
+                                    Panduan Ukuran
+                                </button>
+                                @endif
+                            </div>
                         </div>
 
                         <!-- Alert Validasi Jika Belum Memilih Ukuran -->
@@ -227,27 +240,30 @@
                             <span class="font-medium text-gray-900">{{ $product['condition'] }}</span>
                         </div>
                         <div>
-                            <span class="text-gray-500 block mb-1">Pesanan Minimum</span>
-                            <span class="font-medium text-gray-900">{{ $product['min_order'] }} buah</span>
+                            <span class="text-gray-500 block mb-1">Kategori</span>
+                            <span class="font-medium text-gray-900 capitalize">{{ $product['category'] }}</span>
                         </div>
                         <div>
-                            <span class="text-gray-500 block mb-1">Supplier</span>
-                            <span class="font-medium text-gray-900">{{ $product['supplier'] }}</span>
+                            <span class="text-gray-500 block mb-1">Brand Resmi</span>
+                            <span class="font-semibold text-primary flex items-center gap-1">
+                                <i data-lucide="badge-check" class="w-4 h-4 text-primary"></i> ALLWEAR Official
+                            </span>
                         </div>
                     </div>
 
-                    <!-- Lokasi Toko -->
+                    <!-- Layanan Pengiriman Resmi Allwear -->
                     <div class="rounded-xl border border-orange-100 bg-orange-50/70 p-4 mb-8">
                         <div class="flex items-start gap-3">
                             <div class="w-9 h-9 rounded-full bg-white text-primary flex items-center justify-center shrink-0 shadow-sm">
-                                <i data-lucide="map-pin" class="w-5 h-5"></i>
+                                <i data-lucide="package-check" class="w-5 h-5"></i>
                             </div>
                             <div class="min-w-0">
-                                <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Barang terdekat dari lokasi</p>
-                                <p class="text-sm font-medium text-gray-900 leading-relaxed">{{ $product['address'] }}</p>
-                                <a href="{{ $product['map_url'] }}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 mt-2 text-sm font-bold text-primary hover:underline">
-                                    Buka alamat asli di Google Maps <i data-lucide="external-link" class="w-4 h-4"></i>
-                                </a>
+                                <p class="text-xs font-bold uppercase tracking-wider text-primary mb-1">Koleksi Eksklusif ALLWEAR</p>
+                                <p class="text-sm font-medium text-gray-900 leading-relaxed">Produk resmi brand ALLWEAR dengan standar jahitan dan bahan terkurasi. Dikemas rapi dan dikirim langsung ke seluruh Indonesia.</p>
+                                <div class="flex flex-wrap items-center gap-3 mt-2 text-xs font-medium text-gray-600">
+                                    <span class="inline-flex items-center gap-1"><i data-lucide="check" class="w-3.5 h-3.5 text-green-600"></i> 100% Original ALLWEAR</span>
+                                    <span class="inline-flex items-center gap-1"><i data-lucide="truck" class="w-3.5 h-3.5 text-primary"></i> Pengiriman Bergaransi</span>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -307,44 +323,324 @@
     </div>
     
     <!-- Specs and Description -->
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-        <div class="lg:col-span-2 space-y-8">
-            <div class="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-                <h3 class="text-xl font-bold text-gray-900 mb-6">Deskripsi Produk</h3>
-                <div class="prose max-w-none text-gray-600 space-y-4">
-                    <p class="leading-relaxed text-base">{{ $product['description'] }}</p>
-                    <div class="mt-4 pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm not-prose">
-                        <div class="flex items-start gap-3 p-3 bg-orange-50/50 rounded-xl border border-orange-100">
-                            <i data-lucide="zap" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
-                            <div>
-                                <h4 class="font-semibold text-gray-900">Status: Siap Dikirim</h4>
-                                <p class="text-xs text-gray-500 mt-0.5">Produk ready stock dan diproses kirim maksimal 1x24 jam kerja dari alamat toko.</p>
+    <div id="product-specs-section" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div class="lg:col-span-2 space-y-8" x-data="{ activeTab: 'description' }" x-on:switch-tab.window="activeTab = $event.detail">
+            <div class="bg-white rounded-2xl border border-gray-200 overflow-hidden shadow-sm">
+                <!-- Navigation Tabs -->
+                <div class="flex border-b border-gray-200 bg-gray-50/80 overflow-x-auto no-scrollbar">
+                    <button type="button" 
+                            @click="activeTab = 'description'"
+                            :class="activeTab === 'description' ? 'border-primary text-primary bg-white font-bold shadow-xs' : 'border-transparent text-gray-500 hover:text-gray-900 font-medium'"
+                            class="py-4 px-6 border-b-2 text-sm whitespace-nowrap transition-colors flex items-center gap-2">
+                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                        Deskripsi &amp; Detail
+                    </button>
+                    @if(!empty($product['size_chart']))
+                    <button type="button" 
+                            @click="activeTab = 'size_chart'"
+                            :class="activeTab === 'size_chart' ? 'border-primary text-primary bg-white font-bold shadow-xs' : 'border-transparent text-gray-500 hover:text-gray-900 font-medium'"
+                            class="py-4 px-6 border-b-2 text-sm whitespace-nowrap transition-colors flex items-center gap-2">
+                        <i data-lucide="ruler" class="w-4 h-4"></i>
+                        Panduan Ukuran (Size Chart)
+                        <span class="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded-full bg-orange-100 text-orange-700">
+                            {{ $product['category'] }}
+                        </span>
+                    </button>
+                    @endif
+                    <button type="button" 
+                            @click="activeTab = 'material_care'"
+                            :class="activeTab === 'material_care' ? 'border-primary text-primary bg-white font-bold shadow-xs' : 'border-transparent text-gray-500 hover:text-gray-900 font-medium'"
+                            class="py-4 px-6 border-b-2 text-sm whitespace-nowrap transition-colors flex items-center gap-2">
+                        <i data-lucide="sparkles" class="w-4 h-4"></i>
+                        Material &amp; Perawatan
+                    </button>
+                    <button type="button" 
+                            @click="activeTab = 'specs'"
+                            :class="activeTab === 'specs' ? 'border-primary text-primary bg-white font-bold shadow-xs' : 'border-transparent text-gray-500 hover:text-gray-900 font-medium'"
+                            class="py-4 px-6 border-b-2 text-sm whitespace-nowrap transition-colors flex items-center gap-2">
+                        <i data-lucide="list-checks" class="w-4 h-4"></i>
+                        Spesifikasi Lengkap
+                    </button>
+                </div>
+
+                <div class="p-6 md:p-8">
+                    <!-- TAB 1: DESKRIPSI & DETAIL -->
+                    <div x-show="activeTab === 'description'" class="space-y-8" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+                        <div>
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900 tracking-tight flex items-center gap-2">
+                                    <span class="w-2 h-5 bg-primary rounded-full"></span>
+                                    Deskripsi Produk
+                                </h3>
+                                <span class="text-xs font-semibold text-gray-400 uppercase tracking-wider">ALLWEAR Official Collection</span>
+                            </div>
+                            <p class="text-gray-700 leading-relaxed text-base">
+                                {{ $product['description'] }}
+                            </p>
+                        </div>
+
+                        <!-- Product Quick Highlights (Material & Color) -->
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            @if(!empty($product['material']))
+                            <div class="flex items-center gap-3.5 p-4 rounded-xl border border-gray-200/80 bg-gray-50/50">
+                                <div class="w-10 h-10 rounded-lg bg-orange-100 text-primary flex items-center justify-center shrink-0">
+                                    <i data-lucide="layers" class="w-5 h-5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 block">Material Bahan</span>
+                                    <span class="font-bold text-gray-900 text-sm truncate block">{{ $product['material'] }}</span>
+                                </div>
+                            </div>
+                            @endif
+
+                            @if(!empty($product['color']))
+                            <div class="flex items-center gap-3.5 p-4 rounded-xl border border-gray-200/80 bg-gray-50/50">
+                                <div class="w-10 h-10 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                                    <i data-lucide="palette" class="w-5 h-5"></i>
+                                </div>
+                                <div class="min-w-0">
+                                    <span class="text-xs font-semibold uppercase tracking-wider text-gray-500 block">Varian Warna</span>
+                                    <span class="font-bold text-gray-900 text-sm truncate block">{{ $product['color'] }}</span>
+                                </div>
+                            </div>
+                            @endif
+                        </div>
+
+                        <!-- Product Details / Detail Desain & Konstruksi -->
+                        @if(!empty($product['structured_details']))
+                        <div class="pt-2">
+                            <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900 mb-4 flex items-center gap-2">
+                                <i data-lucide="check-circle" class="w-4 h-4 text-primary"></i>
+                                Detail Desain & Karakteristik
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                                @foreach($product['structured_details'] as $label => $val)
+                                <div class="flex items-start gap-3 p-3.5 rounded-xl border border-gray-100 bg-white hover:border-gray-200 transition shadow-2xs">
+                                    <span class="w-2 h-2 rounded-full bg-primary mt-1.5 shrink-0"></span>
+                                    <div class="text-sm">
+                                        <span class="font-semibold text-gray-800 block">{{ $label }}</span>
+                                        <span class="text-gray-600 mt-0.5 block leading-normal">{{ $val }}</span>
+                                    </div>
+                                </div>
+                                @endforeach
                             </div>
                         </div>
-                        <div class="flex items-start gap-3 p-3 bg-green-50/50 rounded-xl border border-green-100">
-                            <i data-lucide="shield-check" class="w-5 h-5 text-green-600 shrink-0 mt-0.5"></i>
+                        @endif
+
+                        <!-- Model Information (Only displayed if verified data exists) -->
+                        @if(!empty($product['model_info']))
+                        <div class="p-4 rounded-xl border border-blue-100 bg-blue-50/60 flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-blue-100 text-blue-700 flex items-center justify-center shrink-0">
+                                <i data-lucide="user-check" class="w-5 h-5"></i>
+                            </div>
                             <div>
-                                <h4 class="font-semibold text-gray-900">Garansi Kualitas 100%</h4>
-                                <p class="text-xs text-gray-500 mt-0.5">Quality check ganda sebelum packing untuk memastikan kondisi barang sempurna.</p>
+                                <h4 class="text-sm font-bold text-blue-900">Informasi Model</h4>
+                                <p class="text-xs text-blue-800 mt-0.5 leading-relaxed">{{ $product['model_info'] }}</p>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Additional Notes & Official Assurances -->
+                        <div class="pt-4 border-t border-gray-100 grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                            <div class="flex items-start gap-3 p-4 bg-orange-50/60 rounded-xl border border-orange-100">
+                                <i data-lucide="zap" class="w-5 h-5 text-primary shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-900">Status: Siap Dikirim</h4>
+                                    <p class="text-xs text-gray-600 mt-1 leading-relaxed">Produk ready stock dan diproses kirim maksimal 1x24 jam kerja langsung oleh tim ALLWEAR.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start gap-3 p-4 bg-green-50/60 rounded-xl border border-green-100">
+                                <i data-lucide="shield-check" class="w-5 h-5 text-green-600 shrink-0 mt-0.5"></i>
+                                <div>
+                                    <h4 class="font-bold text-gray-900">Garansi Kualitas 100%</h4>
+                                    <p class="text-xs text-gray-600 mt-1 leading-relaxed">Quality control ganda sebelum packing untuk memastikan kerapian jahitan dan keaslian produk.</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="bg-white rounded-xl border border-gray-200 p-6 md:p-8 shadow-sm">
-                <h3 class="text-xl font-bold text-gray-900 mb-6">Spesifikasi</h3>
-                <div class="overflow-hidden rounded-lg border border-gray-200">
-                    <table class="min-w-full divide-y divide-gray-200">
-                        <tbody class="divide-y divide-gray-200 bg-white">
-                            @foreach($product['specifications'] as $key => $value)
-                            <tr>
-                                <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 bg-gray-50 w-1/3">{{ $key }}</td>
-                                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ $value }}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+
+                    <!-- TAB 2: PANDUAN UKURAN (SIZE CHART) -->
+                    @if(!empty($product['size_chart']))
+                    <div x-show="activeTab === 'size_chart'" id="size-chart" class="space-y-6" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <h3 class="text-lg font-bold text-gray-900 flex items-center gap-2">
+                                    <span class="w-2 h-5 bg-primary rounded-full"></span>
+                                    {{ $product['size_chart']['title'] }}
+                                </h3>
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-gray-100 text-gray-600">
+                                    Satuan: Sentimeter (cm)
+                                </span>
+                            </div>
+                            <p class="text-xs text-gray-500 leading-relaxed">
+                                @if(!empty($product['size_chart']['notes']))
+                                    {{ $product['size_chart']['notes'] }}
+                                @else
+                                    Tabel ukuran ini disesuaikan khusus untuk kategori {{ $product['category'] }} dan hanya menampilkan varian ukuran yang tersedia untuk produk ini.
+                                @endif
+                            </p>
+                        </div>
+
+                        <!-- Size Chart Table -->
+                        <div class="overflow-x-auto rounded-xl border border-gray-200 shadow-2xs">
+                            <table class="min-w-full divide-y divide-gray-200 text-sm">
+                                <thead>
+                                    <tr class="bg-gray-50">
+                                        @foreach($product['size_chart']['headers'] as $index => $header)
+                                        <th scope="col" class="py-3.5 px-4 text-xs font-bold text-gray-700 uppercase tracking-wider {{ $index === 0 ? 'text-left bg-gray-100/70' : 'text-center' }}">
+                                            {{ $header }}
+                                        </th>
+                                        @endforeach
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-200 bg-white">
+                                    @foreach($product['size_chart']['rows'] as $row)
+                                    <tr class="transition-colors hover:bg-orange-50/40"
+                                        :class="selectedSize && selectedSize.toUpperCase() === '{{ strtoupper($row['size']) }}' ? 'bg-orange-50 font-bold' : ''">
+                                        <td class="whitespace-nowrap py-3.5 px-4 font-bold text-gray-900 bg-gray-50/40 text-left border-r border-gray-100">
+                                            <div class="flex items-center gap-2">
+                                                <span>{{ $row['size'] }}</span>
+                                                <template x-if="selectedSize && selectedSize.toUpperCase() === '{{ strtoupper($row['size']) }}'">
+                                                    <span class="text-[10px] font-bold text-primary bg-primary/10 px-1.5 py-0.5 rounded">Pilihan Anda</span>
+                                                </template>
+                                            </div>
+                                        </td>
+                                        @foreach($row['values'] as $val)
+                                        <td class="whitespace-nowrap py-3.5 px-4 text-gray-600 text-center font-medium">
+                                            {{ $val }}
+                                        </td>
+                                        @endforeach
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Measuring Guide Callout -->
+                        @if(!empty($product['size_chart']['guide']))
+                        <div class="p-4 rounded-xl border border-amber-200/80 bg-amber-50/60 flex items-start gap-3">
+                            <div class="w-9 h-9 rounded-lg bg-amber-100 text-amber-800 flex items-center justify-center shrink-0">
+                                <i data-lucide="help-circle" class="w-5 h-5"></i>
+                            </div>
+                            <div class="text-xs text-amber-900">
+                                <span class="font-bold block text-sm mb-1">Panduan Pengukuran</span>
+                                <p class="leading-relaxed">{{ $product['size_chart']['guide'] }}</p>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Size Tolerance & Exchange Note -->
+                        <div class="p-4 rounded-xl border border-gray-200 bg-gray-50/60 flex items-start gap-3 text-xs text-gray-600">
+                            <i data-lucide="info" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>
+                            <div class="space-y-1">
+                                <p><strong>Catatan Toleransi:</strong> Selisih 1-2 cm dapat terjadi karena proses pemotongan dan penjahitan manual pada produksi massal.</p>
+                                <p><strong>Ragu dengan ukuran?</strong> ALLWEAR memberikan garansi penukaran ukuran maksimal 3 hari kerja setelah produk diterima.</p>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
+
+                    <!-- TAB 3: MATERIAL & PERAWATAN -->
+                    <div x-show="activeTab === 'material_care'" class="space-y-6" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                <span class="w-2 h-5 bg-primary rounded-full"></span>
+                                Material & Karakteristik Bahan
+                            </h3>
+                            <p class="text-sm text-gray-600 leading-relaxed">
+                                ALLWEAR memilih material secara teliti untuk memastikan kenyamanan bernapas, keawetan warna, dan kelembutan pada kulit Anda.
+                            </p>
+                        </div>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-4 rounded-xl border border-gray-200 bg-gray-50/50">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400 block mb-1">Material Utama</span>
+                                <span class="text-base font-bold text-gray-900 block">{{ $product['material'] ?? 'Kain Pilihan Berkualitas Tinggi' }}</span>
+                                <p class="text-xs text-gray-500 mt-1">Ditenun dengan standar kerapatan serat optimal untuk ketahanan bentuk jangka panjang.</p>
+                            </div>
+
+                            <div class="p-4 rounded-xl border border-gray-200 bg-gray-50/50">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-gray-400 block mb-1">Karakteristik Warna</span>
+                                <span class="text-base font-bold text-gray-900 block">{{ $product['color'] ?? 'Warna Eksklusif ALLWEAR' }}</span>
+                                <p class="text-xs text-gray-500 mt-1">Menggunakan pewarna ramah lingkungan dengan ketahanan luntur tinggi.</p>
+                            </div>
+                        </div>
+
+                        <!-- Care Guidelines -->
+                        <div>
+                            <h4 class="text-sm font-bold uppercase tracking-wider text-gray-900 mb-4 flex items-center gap-2">
+                                <i data-lucide="shield-check" class="w-4 h-4 text-green-600"></i>
+                                Petunjuk Perawatan (Garment Care Guide)
+                            </h4>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3.5">
+                                @foreach($product['care_instructions'] as $instruction)
+                                <div class="flex items-start gap-3 p-3.5 rounded-xl border border-gray-200/70 bg-white">
+                                    <div class="w-6 h-6 rounded-full bg-orange-100 text-primary flex items-center justify-center shrink-0 mt-0.5">
+                                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                                    </div>
+                                    <span class="text-xs text-gray-700 leading-relaxed font-medium">{{ $instruction }}</span>
+                                </div>
+                                @endforeach
+                            </div>
+                        </div>
+
+                        <!-- Quality Assurance -->
+                        <div class="p-4 rounded-xl border border-green-100 bg-green-50/60 flex items-start gap-3 text-xs text-green-900">
+                            <i data-lucide="award" class="w-5 h-5 text-green-600 shrink-0"></i>
+                            <div>
+                                <span class="font-bold block text-sm mb-0.5">Jaminan Standar ALLWEAR Official</span>
+                                <p class="leading-relaxed">Setiap produk lolos uji kendali mutu sebelum dikemas. Perawatan yang sesuai akan menjaga kelembutan dan kualitas kain hingga bertahun-tahun.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- TAB 4: SPESIFIKASI LENGKAP -->
+                    <div x-show="activeTab === 'specs'" class="space-y-6" x-transition:enter="transition ease-out duration-200" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0">
+                        <div>
+                            <h3 class="text-lg font-bold text-gray-900 mb-2 flex items-center gap-2">
+                                <span class="w-2 h-5 bg-primary rounded-full"></span>
+                                Spesifikasi Teknis Produk
+                            </h3>
+                            <p class="text-sm text-gray-500">Daftar lengkap atribut teknis resmi dari basis data ALLWEAR.</p>
+                        </div>
+
+                        <div class="overflow-hidden rounded-xl border border-gray-200">
+                            <table class="min-w-full divide-y divide-gray-200">
+                                <tbody class="divide-y divide-gray-200 bg-white">
+                                    <tr>
+                                        <td class="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 bg-gray-50 w-1/3">Brand</td>
+                                        <td class="px-3 py-3.5 text-sm font-bold text-primary flex items-center gap-1.5">
+                                            <i data-lucide="badge-check" class="w-4 h-4 text-primary"></i>
+                                            ALLWEAR Official
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 bg-gray-50 w-1/3">Kategori Produk</td>
+                                        <td class="px-3 py-3.5 text-sm text-gray-700 capitalize font-medium">{{ $product['category'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 bg-gray-50 w-1/3">Kondisi</td>
+                                        <td class="px-3 py-3.5 text-sm text-gray-700 font-medium">{{ $product['condition'] }}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 bg-gray-50 w-1/3">Ketersediaan</td>
+                                        <td class="px-3 py-3.5 text-sm text-green-600 font-semibold flex items-center gap-1">
+                                            <i data-lucide="check-circle-2" class="w-4 h-4"></i>
+                                            {{ $product['availability'] }}
+                                        </td>
+                                    </tr>
+                                    @foreach($product['specifications'] as $key => $value)
+                                    @if(strtolower($key) !== 'brand')
+                                    <tr>
+                                        <td class="py-3.5 pl-4 pr-3 text-sm font-semibold text-gray-900 bg-gray-50 w-1/3">{{ $key }}</td>
+                                        <td class="px-3 py-3.5 text-sm text-gray-600 font-medium">{{ $value }}</td>
+                                    </tr>
+                                    @endif
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -12,13 +12,10 @@
             </div>
 
             <!-- Search Bar -->
-            <div class="hidden md:flex flex-1 min-w-0 max-w-3xl mx-auto">
-                <form action="{{ route('products.index') }}" method="GET" class="w-full flex items-center border border-gray-300 rounded-full bg-gray-50 overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all">
-                    <div class="hidden lg:flex items-center px-4 py-2 border-r border-gray-300 bg-white min-w-[120px]">
-                        <i data-lucide="map-pin" class="w-4 h-4 text-gray-400 mr-2"></i>
-                        <span class="text-sm text-gray-500">Jakarta</span>
-                    </div>
-                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk atau merek..." class="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-sm focus:outline-none">
+            <div class="hidden md:flex flex-1 min-w-0 max-w-2xl mx-auto">
+                <form action="{{ route('products.index') }}" method="GET" class="w-full flex items-center border border-gray-300 rounded-full bg-gray-50 overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20 transition-all pl-4">
+                    <i data-lucide="search" class="w-4 h-4 text-gray-400 shrink-0"></i>
+                    <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari koleksi pakaian ALLWEAR..." class="min-w-0 flex-1 bg-transparent px-3 py-2.5 text-sm focus:outline-none">
                     <button type="submit" class="shrink-0 bg-gray-900 text-white px-5 py-2 m-1 rounded-full text-sm font-medium hover:bg-primary transition-colors">Cari</button>
                 </form>
             </div>
@@ -71,7 +68,7 @@
         <!-- Mobile Search -->
         <div class="md:hidden pb-4">
             <form action="{{ route('products.index') }}" method="GET" class="w-full flex items-center border border-gray-300 rounded-full bg-gray-50 overflow-hidden focus-within:border-primary focus-within:ring-2 focus-within:ring-primary/20">
-                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari produk atau merek..." class="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-sm focus:outline-none">
+                <input type="text" name="search" value="{{ request('search') }}" placeholder="Cari koleksi pakaian ALLWEAR..." class="min-w-0 flex-1 bg-transparent px-4 py-2.5 text-sm focus:outline-none">
                 <button type="submit" aria-label="Cari" class="shrink-0 bg-gray-900 text-white p-2 m-1 rounded-full hover:bg-primary transition-colors"><i data-lucide="search" class="w-4 h-4"></i></button>
             </form>
         </div>

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Produk - ALLWEAR FASHION')
+@section('title', 'Koleksi Resmi - ALLWEAR FASHION')
 
 @section('content')
 <div class="max-w-[1440px] mx-auto px-4 lg:px-8" x-data="{ filterDrawerOpen: false }">
@@ -10,7 +10,7 @@
         <div class="flex items-center gap-2 text-sm text-gray-500">
             <a href="{{ route('home') }}" class="hover:text-primary">Beranda</a>
             <i data-lucide="chevron-right" class="w-4 h-4"></i>
-            <span class="text-gray-900 font-medium">Semua Produk</span>
+            <span class="text-gray-900 font-medium">Koleksi ALLWEAR</span>
         </div>
     </div>
 
@@ -22,26 +22,27 @@
                 @if(request('search'))
                 <input type="hidden" name="search" value="{{ request('search') }}">
                 @endif
+                @if(request('category'))
+                <input type="hidden" name="category" value="{{ request('category') }}">
+                @endif
                 
                 <!-- Active Filters Header -->
                 <div class="flex items-center justify-between mb-4">
                     <h3 class="font-bold text-gray-900 text-lg">Filter</h3>
                 </div>
 
-                <!-- Jenis Toko -->
+                <!-- Kategori Koleksi -->
                 <div class="space-y-3">
-                    <h4 class="font-bold text-gray-900 text-sm">Jenis Toko</h4>
-                    <div class="space-y-2">
-                        @php $supplierTypes = (array) request('supplier_types', []); @endphp
-                        <label class="flex items-center gap-3 cursor-pointer group">
-                            <div class="relative flex items-center justify-center">
-                                <input type="checkbox" name="supplier_types[]" value="Toko Terverifikasi" @if(in_array('Toko Terverifikasi', $supplierTypes, true)) checked @endif class="peer appearance-none w-5 h-5 border border-gray-300 rounded checked:bg-primary checked:border-primary transition-colors cursor-pointer">
-                                <i data-lucide="check" class="absolute w-3.5 h-3.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none"></i>
-                            </div>
-                            <span class="text-sm text-gray-600 group-hover:text-gray-900 flex items-center gap-1">
-                                <i data-lucide="shield-check" class="w-4 h-4 text-orange-500"></i> Toko Terverifikasi
-                            </span>
-                        </label>
+                    <h4 class="font-bold text-gray-900 text-sm">Kategori Koleksi</h4>
+                    <div class="space-y-1.5 text-sm">
+                        <a href="{{ route('products.index', request()->except(['category', 'page'])) }}" class="flex items-center justify-between py-1.5 px-2.5 rounded-lg transition {{ !request('category') ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-primary hover:bg-gray-50' }}">
+                            <span>Semua Kategori</span>
+                        </a>
+                        @foreach(['kemeja' => 'Kemeja', 'dress' => 'Dress', 'kaos' => 'Kaos', 'celana' => 'Celana', 'outer' => 'Outerwear', 'hijab' => 'Hijab & Aksesoris', 'blouse' => 'Blouse', 'rok' => 'Rok'] as $catKey => $catLabel)
+                        <a href="{{ route('products.index', array_merge(request()->except(['page']), ['category' => $catKey])) }}" class="flex items-center justify-between py-1.5 px-2.5 rounded-lg transition {{ request('category') === $catKey ? 'font-bold text-primary bg-primary/10' : 'text-gray-600 hover:text-primary hover:bg-gray-50' }}">
+                            <span>{{ $catLabel }}</span>
+                        </a>
+                        @endforeach
                     </div>
                 </div>
 
@@ -121,7 +122,7 @@
             <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
                 <div>
                     <h1 class="text-gray-900 font-bold">
-                        {{ $products->firstItem() ?? 0 }} - {{ $products->lastItem() ?? 0 }} dari {{ $products->total() }} produk {{ request('search') ? 'untuk "' . request('search') . '"' : '' }}
+                        {{ $products->firstItem() ?? 0 }} - {{ $products->lastItem() ?? 0 }} dari {{ $products->total() }} koleksi resmi ALLWEAR {{ request('search') ? 'untuk "' . request('search') . '"' : '' }}
                     </h1>
                 </div>
 
@@ -150,8 +151,8 @@
                     <div class="flex items-start gap-3">
                         <div class="w-10 h-10 rounded-full bg-white text-primary flex items-center justify-center shadow-sm shrink-0"><i data-lucide="map-pin" class="w-5 h-5"></i></div>
                         <div>
-                            <h2 class="font-bold text-gray-900">Barang terdekat dari lokasi kamu</h2>
-                            <p id="nearbyLocationStatus" class="text-sm text-gray-600 mt-1">Izinkan akses lokasi agar toko terdekat dari posisi kamu ditampilkan, bukan hanya Jakarta.</p>
+                            <h2 class="font-bold text-gray-900">Pengiriman Terdekat ke Lokasi Kamu</h2>
+                            <p id="nearbyLocationStatus" class="text-sm text-gray-600 mt-1">Izinkan akses lokasi agar produk dengan estimasi rute pengiriman terdekat ke alamat kamu ditampilkan lebih awal.</p>
                         </div>
                     </div>
                     <form id="nearbyLocationForm" action="{{ route('products.index') }}" method="GET" class="shrink-0">
@@ -179,10 +180,10 @@
                     navigator.geolocation.getCurrentPosition(function (position) {
                         document.getElementById('nearbyLatitude').value = position.coords.latitude;
                         document.getElementById('nearbyLongitude').value = position.coords.longitude;
-                        status.textContent = 'Lokasi aktif. Menampilkan toko terdekat dari posisi kamu.';
+                        status.textContent = 'Lokasi aktif. Menampilkan koleksi ALLWEAR dengan rute pengiriman terdekat.';
                         document.getElementById('nearbyLocationForm').submit();
                     }, function () {
-                        status.textContent = 'Akses lokasi ditolak. Izinkan lokasi di browser untuk mencari toko terdekat.';
+                        status.textContent = 'Akses lokasi ditolak. Izinkan lokasi di browser untuk estimasi pengiriman terdekat.';
                     }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 });
                 });
             </script>
@@ -190,11 +191,12 @@
 
             <!-- Active Filter Chips -->
             <div class="flex flex-wrap items-center gap-2 mb-6">
-                @foreach((array) request('supplier_types', []) as $type)
+                @if(request('category'))
                 <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-xs font-medium text-gray-700 bg-white shadow-sm">
-                    {{ $type }} <i data-lucide="x" class="w-3 h-3 text-gray-400 cursor-pointer hover:text-gray-900"></i>
+                    Kategori: {{ ucfirst(request('category')) }} 
+                    <a href="{{ route('products.index', request()->except(['category', 'page'])) }}" class="text-gray-400 hover:text-gray-900"><i data-lucide="x" class="w-3 h-3"></i></a>
                 </span>
-                @endforeach
+                @endif
                 
                 @foreach((array) request('product_types', []) as $type)
                 <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full border border-gray-200 text-xs font-medium text-gray-700 bg-white shadow-sm">

@@ -14,8 +14,10 @@ class ProductCatalogService
 {
     protected Collection $products;
 
-    public function __construct()
-    {
+    public function __construct(
+        protected ?ProductDetailService $detailService = null
+    ) {
+        $this->detailService ??= app(ProductDetailService::class);
         $this->loadProducts();
     }
 
@@ -49,7 +51,7 @@ class ProductCatalogService
                     $hasVariants = ! empty($variants);
                     $totalStock = $hasVariants ? array_sum(array_column($variants, 'stock')) : (int) $product->stock;
 
-                    return [
+                    $baseProduct = [
                         'id' => $product->id,
                         'slug' => $product->slug,
                         'name' => $product->name,
@@ -58,7 +60,8 @@ class ProductCatalogService
                         'original_price' => $product->original_price ? (int) $product->original_price : null,
                         'discount_percentage' => (int) $product->discount_percentage,
                         'category' => $product->category,
-                        'brand' => $product->brand,
+                        'brand' => 'ALLWEAR',
+                        'collection_line' => $product->brand,
                         'image' => $product->image,
                         'gallery' => $product->gallery ?? [$product->image],
                         'rating' => (float) $product->rating,
@@ -68,7 +71,7 @@ class ProductCatalogService
                         'min_order' => (int) $product->min_order,
                         'condition' => $product->condition,
                         'availability' => $product->availability,
-                        'supplier' => $product->supplier,
+                        'supplier' => 'ALLWEAR Official Store',
                         'specifications' => $product->specifications ?? [],
                         'variants' => $variants,
                         'has_variants' => $hasVariants,
@@ -79,6 +82,8 @@ class ProductCatalogService
                         'longitude' => $product->longitude,
                         'created_at' => $product->created_at,
                     ];
+
+                    return $this->detailService->enrichProduct($baseProduct);
                 });
 
                 return;
@@ -87,7 +92,13 @@ class ProductCatalogService
             // Log or ignore on serverless environments where DB is cold/unseeded
         }
 
-        $this->products = collect(DummyProducts::get());
+        $this->products = collect(DummyProducts::get())->map(function (array $item): array {
+            $item['collection_line'] = $item['brand'] ?? 'ALLWEAR';
+            $item['brand'] = 'ALLWEAR';
+            $item['supplier'] = 'ALLWEAR Official Store';
+
+            return $this->detailService->enrichProduct($item);
+        });
     }
 
     public function refresh(): self
@@ -131,8 +142,14 @@ class ProductCatalogService
             $query = $query->filter(function ($product) use ($search) {
                 return str_contains(strtolower($product['name']), $search) ||
                        str_contains(strtolower($product['brand']), $search) ||
+                       str_contains(strtolower($product['collection_line'] ?? ''), $search) ||
                        str_contains(strtolower($product['category']), $search);
             });
+        }
+
+        if (! empty($filters['brand'])) {
+            $brand = strtolower(trim((string) $filters['brand']));
+            $query = $query->filter(fn (array $product) => strtolower((string) $product['brand']) === $brand || strtolower((string) ($product['collection_line'] ?? '')) === $brand);
         }
 
         if (! empty($filters['category'])) {
@@ -149,8 +166,10 @@ class ProductCatalogService
         }
 
         if (! empty($filters['supplier_types'])) {
-            // Supplier types filter
-            $query = $query->whereIn('supplier', (array) $filters['supplier_types']);
+            $types = (array) $filters['supplier_types'];
+            if (! in_array('Toko Terverifikasi', $types, true)) {
+                $query = $query->whereIn('supplier', $types);
+            }
         }
 
         if (! empty($filters['product_types'])) {

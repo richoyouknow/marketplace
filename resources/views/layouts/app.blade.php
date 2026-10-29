@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="ALLWEAR FASHION — marketplace fashion modern untuk menemukan pakaian pilihan dengan harga terbaik.">
+    <meta name="description" content="ALLWEAR FASHION — brand fashion resmi untuk menemukan koleksi pakaian modern berkualitas dengan harga terbaik.">
     <title>@yield('title', 'ALLWEAR FASHION - Premium E-Commerce')</title>
     
     <!-- Favicon -->

@@ -28,7 +28,7 @@
         $faqs = [
             ['Bagaimana cara melakukan pemesanan?', 'Pilih produk, tekan Tambah ke Keranjang, buka keranjang, lalu lanjutkan ke checkout. Isi alamat pengiriman, pilih pembayaran, dan konfirmasi pesanan.'],
             ['Apakah saya bisa melacak pesanan?', 'Bisa. Setelah pesanan diproses, informasi pengiriman dan nomor resi tersedia di halaman Pesanan pada akun kamu.'],
-            ['Bagaimana cara menggunakan fitur Barang Terdekat?', 'Buka menu Barang Terdekat, pilih Gunakan lokasi saya, dan izinkan akses lokasi di browser. Produk akan diurutkan berdasarkan jarak.'],
+            ['Bagaimana cara menggunakan fitur Barang Terdekat?', 'Buka menu Barang Terdekat, pilih Gunakan lokasi saya, dan izinkan akses lokasi di browser. Koleksi produk ALLWEAR akan diurutkan berdasarkan estimasi rute pengiriman terdekat ke alamat kamu.'],
             ['Apakah produk bisa dikembalikan?', 'Jika produk rusak atau tidak sesuai pesanan, hubungi kami maksimal 2 x 24 jam setelah paket diterima dengan menyertakan foto dan detail pesanan.'],
             ['Metode pembayaran apa saja yang tersedia?', 'ALLWEAR FASHION mendukung transfer bank, e-wallet, dan metode pembayaran lain yang tersedia pada halaman checkout.'],
         ];
@@ -53,7 +53,7 @@
     <section id="panduan" class="mt-16 scroll-mt-24">
         <div class="mb-6"><p class="text-sm font-bold uppercase tracking-[0.16em] text-primary">Mulai belanja</p><h2 class="mt-2 text-2xl font-bold text-gray-900">Belanja dalam tiga langkah</h2></div>
         <div class="grid gap-4 md:grid-cols-3">
-            @foreach([['01', 'Temukan produk', 'Jelajahi kategori atau gunakan pencarian untuk menemukan produk favoritmu.'], ['02', 'Periksa detail', 'Lihat deskripsi, spesifikasi, rating, stok, dan alamat toko sebelum membeli.'], ['03', 'Checkout aman', 'Masukkan alamat, pilih pembayaran, lalu pantau pesanan sampai tiba.']] as $step)
+            @foreach([['01', 'Temukan produk', 'Jelajahi kategori atau gunakan pencarian untuk menemukan produk favoritmu.'], ['02', 'Periksa detail', 'Lihat deskripsi, spesifikasi, pilihan ukuran, rating, dan ketersediaan stok sebelum membeli.'], ['03', 'Checkout aman', 'Masukkan alamat, pilih pembayaran, lalu pantau pesanan sampai tiba.']] as $step)
                 <div class="rounded-2xl border border-gray-200 bg-white p-6"><span class="text-3xl font-black text-orange-100">{{ $step[0] }}</span><h3 class="mt-4 font-bold text-gray-900">{{ $step[1] }}</h3><p class="mt-2 text-sm leading-6 text-gray-500">{{ $step[2] }}</p></div>
             @endforeach
         </div>

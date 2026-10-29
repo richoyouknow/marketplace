@@ -101,7 +101,7 @@
                     </h4>
                     <ul class="space-y-2 text-xs text-emerald-800 leading-relaxed">
                         <li>• Barang rusak/cacat pabrik (sobek jahitan, resleting macet, noda membandel).</li>
-                        <li>• Salah kirim varian ukuran, warna, atau model barang oleh penjual.</li>
+                        <li>• Salah kirim varian ukuran, warna, atau model barang oleh tim pengiriman ALLWEAR.</li>
                         <li>• Isi paket tidak lengkap atau kurang dari kuantitas pemesanan.</li>
                         <li>• Barang tidak sesuai dengan spesifikasi deskripsi produk secara signifikan.</li>
                     </ul>

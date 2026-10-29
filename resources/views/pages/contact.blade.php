@@ -163,7 +163,7 @@
                                 <option value="Pertanyaan Pesanan & Pengiriman" {{ old('subject') === 'Pertanyaan Pesanan & Pengiriman' ? 'selected' : '' }}>Pertanyaan Pesanan & Pengiriman</option>
                                 <option value="Pengajuan Retur atau Refund" {{ old('subject') === 'Pengajuan Retur atau Refund' ? 'selected' : '' }}>Pengajuan Retur atau Refund</option>
                                 <option value="Kendala Pembayaran / Virtual Account" {{ old('subject') === 'Kendala Pembayaran / Virtual Account' ? 'selected' : '' }}>Kendala Pembayaran / Virtual Account</option>
-                                <option value="Kemitraan Penjual / Merchant" {{ old('subject') === 'Kemitraan Penjual / Merchant' ? 'selected' : '' }}>Kemitraan Penjual / Merchant</option>
+                                <option value="Kerjasama Bisnis & Kemitraan" {{ old('subject') === 'Kerjasama Bisnis & Kemitraan' ? 'selected' : '' }}>Kerjasama Bisnis & Kemitraan</option>
                                 <option value="Kritik & Saran Lainnya" {{ old('subject') === 'Kritik & Saran Lainnya' ? 'selected' : '' }}>Kritik & Saran Lainnya</option>
                             </select>
                             @error('subject') <span class="text-red-500 text-xs">{{ $message }}</span> @enderror

@@ -80,7 +80,7 @@
                     <div class="w-10 h-10 rounded-full bg-orange-100 text-primary flex items-center justify-center font-bold mb-2">
                         <i data-lucide="package" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-xs font-bold text-gray-900">Diproses Penjual</span>
+                    <span class="text-xs font-bold text-gray-900">Diproses ALLWEAR</span>
                     <span class="text-[11px] text-gray-500 mt-0.5">Sedang dikemas</span>
                 </div>
 
@@ -160,7 +160,7 @@
 
                 <div class="mt-5 p-3.5 bg-gray-50 rounded-xl flex items-center gap-3 text-xs text-gray-600">
                     <i data-lucide="info" class="w-4 h-4 text-primary shrink-0"></i>
-                    <span>{{ $order['shipping']['status_tracking'] ?? 'Paket sedang disiapkan penjual untuk dikirimkan ke mitra ekspedisi.' }}</span>
+                    <span>{{ $order['shipping']['status_tracking'] ?? 'Paket sedang disiapkan tim ALLWEAR untuk dikirimkan ke mitra ekspedisi.' }}</span>
                 </div>
             </div>
 
@@ -190,9 +190,7 @@
                                             {{ $item['name'] }}
                                         @endif
                                     </h3>
-                                    @if(!empty($item['brand']))
-                                    <span class="text-xs text-gray-400 mt-0.5 block">Brand: {{ $item['brand'] }}</span>
-                                    @endif
+                                    <span class="text-xs text-primary font-semibold mt-0.5 block">Koleksi Resmi ALLWEAR</span>
                                     @if(!empty($item['size']))
                                     <span class="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded font-bold bg-orange-50 text-orange-800 border border-orange-200 mt-1">
                                         <i data-lucide="ruler" class="w-3 h-3 text-primary"></i> Ukuran: {{ $item['size'] }}

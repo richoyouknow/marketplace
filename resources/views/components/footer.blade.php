@@ -7,7 +7,7 @@
                     <img src="{{ asset('allwear-logo.png') }}" alt="ALLWEAR FASHION" class="h-11 sm:h-12 w-auto object-contain">
                 </a>
                 <p class="text-gray-500 text-sm mb-4 max-w-sm leading-relaxed">
-                    Platform fashion modern Indonesia dengan kurasi gaya terbaik, harga bersahabat, serta pengiriman cepat ke seluruh pelosok nusantara.
+                    Brand fashion resmi Indonesia dengan koleksi pakaian modern berkualitas, harga bersahabat, serta pengiriman langsung ke seluruh pelosok nusantara.
                 </p>
                 
                 <!-- Contact info mini block -->

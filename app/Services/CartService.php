@@ -25,7 +25,7 @@ class CartService
         $productId = is_array($product) ? $product['id'] : $product->id;
         $productSlug = is_array($product) ? $product['slug'] : $product->slug;
         $productName = is_array($product) ? $product['name'] : $product->name;
-        $productBrand = is_array($product) ? $product['brand'] : $product->brand;
+        $productBrand = 'ALLWEAR';
         $productImage = is_array($product) ? $product['image'] : $product->image;
         $basePrice = is_array($product) ? (int) $product['price'] : (int) $product->price;
 

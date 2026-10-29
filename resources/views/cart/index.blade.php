@@ -29,7 +29,7 @@
                     </a>
                     
                     <div class="flex-1 min-w-0">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1 block">{{ $item['brand'] }}</span>
+                        <span class="text-xs font-bold text-primary uppercase tracking-wider mb-1 block">Koleksi Resmi ALLWEAR</span>
                         <a href="{{ route('products.show', $item['slug']) }}" class="font-bold text-gray-900 text-lg hover:text-primary transition-colors line-clamp-2 mb-2">
                             {{ $item['name'] }}
                         </a>

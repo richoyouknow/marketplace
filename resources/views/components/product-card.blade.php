@@ -39,10 +39,10 @@
             </div>
             <span class="truncate">Terjual {{ $product['sold_count'] }}</span>
         </div>
-        <a href="{{ $product['map_url'] }}" target="_blank" rel="noopener noreferrer" class="flex items-center gap-1.5 text-xs text-gray-500 hover:text-primary mb-3 truncate" title="Buka alamat asli">
-            <i data-lucide="map-pin" class="w-3.5 h-3.5 text-primary shrink-0"></i>
-            <span class="truncate">{{ $product['address'] }}</span>
-        </a>
+        <div class="flex items-center gap-1.5 text-xs text-primary mb-3 truncate">
+            <i data-lucide="shield-check" class="w-3.5 h-3.5 text-primary shrink-0"></i>
+            <span class="font-semibold text-gray-700 truncate">Koleksi Resmi ALLWEAR</span>
+        </div>
         @if(!empty($product['variants']))
         <a href="{{ route('products.show', $product['slug']) }}" class="w-full flex items-center justify-center gap-2 bg-orange-50 text-primary hover:bg-primary hover:text-white border border-primary/20 hover:border-primary py-2.5 rounded-lg text-sm font-semibold transition-colors">
             <i data-lucide="sliders" class="w-4 h-4"></i>
