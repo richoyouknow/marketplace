@@ -246,7 +246,7 @@
                         <div>
                             <span class="text-gray-500 block mb-1">Brand Resmi</span>
                             <span class="font-semibold text-primary flex items-center gap-1">
-                                <i data-lucide="badge-check" class="w-4 h-4 text-primary"></i> ALLWEAR Official
+                                <i data-lucide="badge-check" class="w-4 h-4 text-primary"></i> Original 100%
                             </span>
                         </div>
                     </div>
